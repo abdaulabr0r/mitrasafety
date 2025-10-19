@@ -4,8 +4,14 @@ import Hero from "@/components/Hero";
 import CategoryCard from "@/components/CategoryCard";
 import ProductCard from "@/components/ProductCard";
 import CartSheet from "@/components/CartSheet";
+import ProductDetailModal from "@/components/ProductDetailModal";
+import FilterSidebar from "@/components/FilterSidebar";
+import CheckoutModal from "@/components/CheckoutModal";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import { Filter } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 import helmetImage from "@assets/generated_images/Red_safety_helmet_product_photo_b5570fe7.png";
 import glovesImage from "@assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png";
@@ -22,70 +28,121 @@ const mockProducts = [
     name: "Helm Safety Proyek MSA V-Gard dengan Ventilasi",
     price: 125000,
     originalPrice: 175000,
+    description: "Helm safety premium dengan teknologi ventilasi terbaik untuk kenyamanan maksimal. Dilengkapi dengan suspensi 4-titik yang dapat disesuaikan dan tali dagu yang kuat.",
     imageUrl: helmetImage,
+    images: [helmetImage, helmetImage, helmetImage, helmetImage],
     category: "helmet",
     badge: "Best Seller",
     inStock: true,
+    specifications: [
+      { label: "Material", value: "ABS High Impact" },
+      { label: "Berat", value: "350 gram" },
+      { label: "Sertifikasi", value: "SNI, ISO 9001" },
+      { label: "Warna", value: "Merah, Kuning, Putih" },
+    ],
   },
   {
     id: "2",
     name: "Sarung Tangan Safety Premium Anti-Slip",
     price: 45000,
+    description: "Sarung tangan dengan grip anti-slip untuk pekerjaan presisi dan perlindungan tangan maksimal.",
     imageUrl: glovesImage,
+    images: [glovesImage, glovesImage],
     category: "gloves",
     inStock: true,
+    specifications: [
+      { label: "Material", value: "Kulit Sintetis" },
+      { label: "Ukuran", value: "L, XL" },
+    ],
   },
   {
     id: "3",
     name: "Rompi Safety High-Visibility dengan Reflektif",
     price: 65000,
     originalPrice: 85000,
+    description: "Rompi safety dengan strip reflektif untuk visibilitas maksimal di area kerja.",
     imageUrl: vestImage,
+    images: [vestImage, vestImage, vestImage],
     category: "vest",
     inStock: true,
+    specifications: [
+      { label: "Material", value: "Polyester" },
+      { label: "Warna", value: "Orange, Kuning" },
+    ],
   },
   {
     id: "4",
     name: "Sepatu Safety Boot Steel Toe Cap",
     price: 350000,
+    description: "Sepatu safety dengan pelindung baja pada ujung kaki untuk perlindungan maksimal.",
     imageUrl: bootsImage,
+    images: [bootsImage, bootsImage],
     category: "boots",
     inStock: true,
+    specifications: [
+      { label: "Material", value: "Kulit Asli" },
+      { label: "Sol", value: "Anti-slip Rubber" },
+      { label: "Ukuran", value: "39-45" },
+    ],
   },
   {
     id: "5",
     name: "Kacamata Safety Anti-Fog UV Protection",
     price: 55000,
     originalPrice: 75000,
+    description: "Kacamata pelindung dengan teknologi anti-fog dan perlindungan UV.",
     imageUrl: gogglesImage,
+    images: [gogglesImage, gogglesImage, gogglesImage],
     category: "goggles",
     badge: "Promo",
     inStock: true,
+    specifications: [
+      { label: "Lensa", value: "Polycarbonate" },
+      { label: "Fitur", value: "Anti-Fog, UV400" },
+    ],
   },
   {
     id: "6",
     name: "Masker N95 Respirator 3M",
     price: 25000,
+    description: "Masker N95 untuk perlindungan pernapasan dari partikel berbahaya.",
     imageUrl: maskImage,
+    images: [maskImage],
     category: "mask",
     inStock: false,
+    specifications: [
+      { label: "Tingkat Filtrasi", value: "95%" },
+      { label: "Standar", value: "N95, NIOSH" },
+    ],
   },
   {
     id: "7",
     name: "Helm Safety Standar SNI Kuning",
     price: 85000,
+    description: "Helm safety standar dengan sertifikasi SNI untuk berbagai jenis pekerjaan.",
     imageUrl: helmetYellowImage,
+    images: [helmetYellowImage, helmetYellowImage],
     category: "helmet",
     inStock: true,
+    specifications: [
+      { label: "Material", value: "HDPE" },
+      { label: "Sertifikasi", value: "SNI" },
+    ],
   },
   {
     id: "8",
     name: "Sarung Tangan Kulit Safety Premium",
     price: 75000,
     originalPrice: 95000,
+    description: "Sarung tangan kulit premium untuk pekerjaan berat dengan perlindungan maksimal.",
     imageUrl: glovesImage,
+    images: [glovesImage, glovesImage, glovesImage],
     category: "gloves",
     inStock: true,
+    specifications: [
+      { label: "Material", value: "Kulit Asli" },
+      { label: "Ukuran", value: "M, L, XL" },
+    ],
   },
 ];
 
@@ -110,11 +167,20 @@ interface CartItem {
 
 export default function Home() {
   const [cartOpen, setCartOpen] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [filterOpen, setFilterOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<typeof mockProducts[0] | null>(null);
+  const [productDetailOpen, setProductDetailOpen] = useState(false);
+  
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  
   const { toast } = useToast();
 
-  const handleAddToCart = (productId: string) => {
+  const handleAddToCart = (productId: string, quantity: number = 1) => {
     const product = mockProducts.find((p) => p.id === productId);
     if (!product) return;
 
@@ -123,7 +189,7 @@ export default function Home() {
       if (existingItem) {
         return prev.map((item) =>
           item.productId === productId
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       }
@@ -134,7 +200,7 @@ export default function Home() {
           productId: product.id,
           name: product.name,
           price: product.price,
-          quantity: 1,
+          quantity,
           imageUrl: product.imageUrl,
         },
       ];
@@ -162,23 +228,60 @@ export default function Home() {
   };
 
   const handleCategoryClick = (categoryId: string) => {
-    setSelectedCategory(categoryId);
+    setSelectedCategories([categoryId]);
     const element = document.getElementById("products-section");
     element?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const filteredProducts = selectedCategory
-    ? mockProducts.filter((p) => p.category === selectedCategory)
-    : mockProducts;
+  const handleCategoryToggle = (categoryId: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(categoryId)
+        ? prev.filter((c) => c !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
+
+  const handleClearFilters = () => {
+    setPriceRange([0, 1000000]);
+    setSelectedCategories([]);
+    setInStockOnly(false);
+    setSearchQuery("");
+  };
+
+  const handleProductClick = (product: typeof mockProducts[0]) => {
+    setSelectedProduct(product);
+    setProductDetailOpen(true);
+  };
+
+  const filteredProducts = mockProducts.filter((product) => {
+    const matchesCategory =
+      selectedCategories.length === 0 || selectedCategories.includes(product.category);
+    const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
+    const matchesStock = !inStockOnly || product.inStock;
+    const matchesSearch =
+      searchQuery === "" ||
+      product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesPrice && matchesStock && matchesSearch;
+  });
 
   const totalCartItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shipping = subtotal >= 500000 ? 0 : 25000;
+  const total = subtotal + shipping;
+
+  const hasActiveFilters =
+    selectedCategories.length > 0 ||
+    inStockOnly ||
+    priceRange[0] > 0 ||
+    priceRange[1] < 1000000 ||
+    searchQuery !== "";
 
   return (
     <div className="flex min-h-screen flex-col">
       <Header
         cartItemCount={totalCartItems}
         onCartClick={() => setCartOpen(true)}
-        onSearch={(query) => console.log("Search:", query)}
+        onSearch={setSearchQuery}
         onCategoryClick={handleCategoryClick}
       />
 
@@ -207,35 +310,86 @@ export default function Home() {
         <section id="products-section" className="container mx-auto px-4 py-8 md:py-12">
           <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
             <h2 className="text-2xl font-bold text-foreground" data-testid="text-products-title">
-              {selectedCategory
-                ? mockCategories.find((c) => c.id === selectedCategory)?.name
-                : "Produk Terlaris"}
+              {selectedCategories.length === 1
+                ? mockCategories.find((c) => c.id === selectedCategories[0])?.name
+                : "Semua Produk"}
             </h2>
-            {selectedCategory && (
-              <button
-                onClick={() => setSelectedCategory(null)}
-                className="text-sm text-primary hover:underline"
-                data-testid="button-clear-filter"
-              >
-                Lihat Semua Produk
-              </button>
-            )}
+            <div className="flex items-center gap-2">
+              {hasActiveFilters && (
+                <Button
+                  variant="outline"
+                  onClick={handleClearFilters}
+                  data-testid="button-clear-all-filters"
+                >
+                  Hapus Filter
+                </Button>
+              )}
+              <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="outline" className="gap-2 md:hidden" data-testid="button-filter-mobile">
+                    <Filter className="h-4 w-4" />
+                    Filter
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-80">
+                  <div className="pt-6">
+                    <FilterSidebar
+                      priceRange={priceRange}
+                      onPriceRangeChange={setPriceRange}
+                      selectedCategories={selectedCategories}
+                      onCategoryToggle={handleCategoryToggle}
+                      inStockOnly={inStockOnly}
+                      onInStockToggle={setInStockOnly}
+                      onClearFilters={handleClearFilters}
+                    />
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                price={product.price}
-                originalPrice={product.originalPrice}
-                imageUrl={product.imageUrl}
-                badge={product.badge}
-                inStock={product.inStock}
-                onAddToCart={handleAddToCart}
-                onClick={() => console.log("Product clicked:", product.id)}
+
+          <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+            <aside className="hidden lg:block">
+              <FilterSidebar
+                priceRange={priceRange}
+                onPriceRangeChange={setPriceRange}
+                selectedCategories={selectedCategories}
+                onCategoryToggle={handleCategoryToggle}
+                inStockOnly={inStockOnly}
+                onInStockToggle={setInStockOnly}
+                onClearFilters={handleClearFilters}
               />
-            ))}
+            </aside>
+
+            <div>
+              {filteredProducts.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-16 text-center">
+                  <p className="text-lg text-muted-foreground mb-4">
+                    Tidak ada produk yang sesuai dengan filter Anda
+                  </p>
+                  <Button onClick={handleClearFilters} variant="outline">
+                    Hapus Filter
+                  </Button>
+                </div>
+              ) : (
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {filteredProducts.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      id={product.id}
+                      name={product.name}
+                      price={product.price}
+                      originalPrice={product.originalPrice}
+                      imageUrl={product.imageUrl}
+                      badge={product.badge}
+                      inStock={product.inStock}
+                      onAddToCart={handleAddToCart}
+                      onClick={() => handleProductClick(product)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </section>
 
@@ -285,9 +439,30 @@ export default function Home() {
         onRemoveItem={handleRemoveItem}
         onCheckout={() => {
           setCartOpen(false);
+          setCheckoutOpen(true);
+        }}
+      />
+
+      <ProductDetailModal
+        open={productDetailOpen}
+        onOpenChange={setProductDetailOpen}
+        product={selectedProduct}
+        onAddToCart={(id, qty) => {
+          handleAddToCart(id, qty);
+          setProductDetailOpen(false);
+        }}
+      />
+
+      <CheckoutModal
+        open={checkoutOpen}
+        onOpenChange={setCheckoutOpen}
+        total={total}
+        onComplete={() => {
+          setCheckoutOpen(false);
+          setCartItems([]);
           toast({
-            title: "Checkout",
-            description: "Fitur checkout akan segera hadir!",
+            title: "Pesanan Berhasil!",
+            description: "Terima kasih telah berbelanja di Mitra Safety Indonesia.",
           });
         }}
       />
