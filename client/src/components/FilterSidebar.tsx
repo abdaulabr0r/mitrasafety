@@ -44,9 +44,10 @@ export default function FilterSidebar({
     selectedCategories.length > 0 || inStockOnly || priceRange[0] > 0 || priceRange[1] < 1000000;
 
   return (
-    <aside className="w-full space-y-6">
+    <aside className="w-full space-y-6" role="complementary" aria-label="Filter produk">
+      {/* Header filter - Filter header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-foreground">Filter</h3>
+        <h3 className="text-lg font-semibold text-foreground" id="filter-heading">Filter</h3>
         {hasActiveFilters && (
           <Button
             variant="ghost"
@@ -54,16 +55,18 @@ export default function FilterSidebar({
             onClick={onClearFilters}
             className="gap-1 text-xs"
             data-testid="button-clear-filters"
+            aria-label="Hapus semua filter yang aktif"
           >
-            <X className="h-3 w-3" />
+            <X className="h-3 w-3" aria-hidden="true" />
             Hapus
           </Button>
         )}
       </div>
 
-      <div className="space-y-4 border-b pb-6">
-        <h4 className="font-semibold text-foreground">Kategori</h4>
-        <div className="space-y-3">
+      {/* Grup filter kategori - Category filter group */}
+      <fieldset className="space-y-4 border-b pb-6">
+        <legend className="font-semibold text-foreground" id="category-filter-legend">Kategori</legend>
+        <div className="space-y-3" role="group" aria-labelledby="category-filter-legend">
           {categories.map((category) => (
             <div key={category.id} className="flex items-center space-x-2">
               <Checkbox
@@ -71,6 +74,7 @@ export default function FilterSidebar({
                 checked={selectedCategories.includes(category.id)}
                 onCheckedChange={() => onCategoryToggle(category.id)}
                 data-testid={`checkbox-category-${category.id}`}
+                aria-label={`Filter kategori ${category.name}`}
               />
               <Label
                 htmlFor={`category-${category.id}`}
@@ -81,11 +85,12 @@ export default function FilterSidebar({
             </div>
           ))}
         </div>
-      </div>
+      </fieldset>
 
-      <div className="space-y-4 border-b pb-6">
-        <h4 className="font-semibold text-foreground">Rentang Harga</h4>
-        <div className="space-y-3">
+      {/* Grup filter harga - Price filter group */}
+      <fieldset className="space-y-4 border-b pb-6">
+        <legend className="font-semibold text-foreground" id="price-filter-legend">Rentang Harga</legend>
+        <div className="space-y-3" role="group" aria-labelledby="price-filter-legend">
           <div className="px-2">
             <Slider
               value={priceRange}
@@ -96,33 +101,36 @@ export default function FilterSidebar({
               className="w-full"
               data-testid="slider-price-range"
               dir="ltr"
+              aria-label={`Rentang harga dari ${formatPrice(priceRange[0])} sampai ${formatPrice(priceRange[1])}`}
             />
           </div>
-          <div className="flex justify-between text-sm text-muted-foreground px-2">
-            <span data-testid="text-price-min">{formatPrice(priceRange[0])}</span>
-            <span data-testid="text-price-max">{formatPrice(priceRange[1])}</span>
+          <div className="flex justify-between text-sm text-muted-foreground px-2" aria-live="polite" aria-atomic="true">
+            <span data-testid="text-price-min" aria-label={`Harga minimum ${formatPrice(priceRange[0])}`}>{formatPrice(priceRange[0])}</span>
+            <span data-testid="text-price-max" aria-label={`Harga maksimum ${formatPrice(priceRange[1])}`}>{formatPrice(priceRange[1])}</span>
           </div>
           <div className="flex justify-between text-xs text-muted-foreground px-2">
             <span>Minimum</span>
             <span>Maksimum</span>
           </div>
         </div>
-      </div>
+      </fieldset>
 
-      <div className="space-y-4">
-        <h4 className="font-semibold text-foreground">Ketersediaan</h4>
-        <div className="flex items-center space-x-2">
+      {/* Grup filter ketersediaan - Availability filter group */}
+      <fieldset className="space-y-4">
+        <legend className="font-semibold text-foreground" id="availability-filter-legend">Ketersediaan</legend>
+        <div className="flex items-center space-x-2" role="group" aria-labelledby="availability-filter-legend">
           <Checkbox
             id="in-stock"
             checked={inStockOnly}
             onCheckedChange={onInStockToggle}
             data-testid="checkbox-in-stock"
+            aria-label="Tampilkan hanya produk dengan stok tersedia"
           />
           <Label htmlFor="in-stock" className="text-sm font-normal cursor-pointer">
             Stok tersedia
           </Label>
         </div>
-      </div>
+      </fieldset>
     </aside>
   );
 }

@@ -7,7 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Minus, Plus, Star } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface ProductDetailModalProps {
@@ -39,6 +39,36 @@ export default function ProductDetailModal({
   const [quantity, setQuantity] = useState(1);
 
   if (!product) return null;
+  
+  const images = product.images || [product.imageUrl];
+
+  // Alt text deskriptif untuk gambar produk detail - Descriptive alt text for product detail images
+  // Menyertakan nama produk, kategori, status stok, dan informasi tambahan
+  // Includes product name, category, stock status, and additional information
+  const mainImageAlt = `${product.name} - ${product.category}${
+    product.badge ? `, ${product.badge}` : ''
+  } - ${product.inStock ? 'Tersedia' : 'Stok habis'} - Gambar produk utama`;
+
+  // Navigasi keyboard untuk galeri gambar - Keyboard navigation for image gallery
+  // Gunakan panah kiri/kanan untuk berpindah gambar
+  // Use left/right arrows to navigate images
+  useEffect(() => {
+    if (!open) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Navigasi gambar dengan panah kiri/kanan - Navigate images with left/right arrows
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        setSelectedImage((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        setSelectedImage((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open, images.length]);
 
   const formatPrice = (amount: number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -52,38 +82,58 @@ export default function ProductDetailModal({
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
-  const images = product.images || [product.imageUrl];
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent 
+        className="max-w-4xl max-h-[90vh] overflow-y-auto"
+        aria-describedby="product-modal-description"
+      >
         <DialogHeader>
           <DialogTitle className="sr-only">{product.name}</DialogTitle>
+          <p id="product-modal-description" className="sr-only">
+            Modal detail produk. Gunakan panah kiri dan kanan untuk navigasi gambar. Tekan Escape untuk menutup.
+            Product detail modal. Use left and right arrow keys to navigate images. Press Escape to close.
+          </p>
         </DialogHeader>
 
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-4">
             <div className="relative aspect-square overflow-hidden rounded-md bg-muted">
+              {/* 
+                Gambar utama produk dengan optimasi - Main product image with optimization
+                
+                Optimasi yang diterapkan - Applied optimizations:
+                - width & height: Mencegah Cumulative Layout Shift (CLS)
+                - Tidak menggunakan lazy loading karena gambar modal biasanya langsung terlihat
+                - Modal images don't use lazy loading as they are immediately visible
+                
+                Untuk gambar produk baru - For new product images:
+                - Gunakan format WebP dengan fallback PNG untuk kompatibilitas maksimal
+                - Use WebP format with PNG fallback for maximum compatibility
+              */}
               <img
                 src={images[selectedImage]}
-                alt={product.name}
+                alt={mainImageAlt}
                 className="h-full w-full object-cover"
+                width={600}
+                height={600}
                 data-testid="img-product-main"
               />
               {product.badge && (
-                <Badge className="absolute left-2 top-2" data-testid="badge-product">
+                <Badge className="absolute left-2 top-2" data-testid="badge-product" aria-label={`Label produk: ${product.badge}`}>
                   {product.badge}
                 </Badge>
               )}
               {discount > 0 && (
-                <Badge variant="destructive" className="absolute right-2 top-2" data-testid="badge-discount">
+                <Badge variant="destructive" className="absolute right-2 top-2" data-testid="badge-discount" aria-label={`Diskon ${discount} persen`}>
                   -{discount}%
                 </Badge>
               )}
             </div>
 
+            {/* Galeri thumbnail gambar - Image thumbnail gallery */}
             {images.length > 1 && (
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-4 gap-2" role="tablist" aria-label="Galeri gambar produk">
                 {images.map((image, index) => (
                   <button
                     key={index}
@@ -92,11 +142,22 @@ export default function ProductDetailModal({
                       selectedImage === index ? "border-primary" : "border-transparent"
                     }`}
                     data-testid={`button-thumbnail-${index}`}
+                    role="tab"
+                    aria-selected={selectedImage === index}
+                    aria-label={`Tampilkan gambar ${index + 1} dari ${images.length}${selectedImage === index ? ', sedang ditampilkan' : ''}`}
                   >
+                    {/* 
+                      Thumbnail dengan optimasi - Thumbnail with optimization
+                      - loading="lazy": Thumbnail menggunakan lazy loading untuk performa
+                      - width & height: Mencegah layout shift
+                    */}
                     <img
                       src={image}
-                      alt={`${product.name} view ${index + 1}`}
+                      alt={`${product.name} - Tampilan ${index + 1} dari ${images.length} - ${product.category}`}
                       className="h-full w-full object-cover"
+                      loading="lazy"
+                      width={150}
+                      height={150}
                     />
                   </button>
                 ))}

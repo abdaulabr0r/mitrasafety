@@ -1,16 +1,89 @@
 <!DOCTYPE html>
 <html lang="id">
   <head>
+    <!-- Pengaturan Karakter dan Kompatibilitas Browser / Character Settings and Browser Compatibility -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Mitra Safety Indonesia - Peralatan Keselamatan Kerja Berkualitas</title>
-    <meta name="description" content="Toko online perlengkapan keselamatan kerja terlengkap di Indonesia. Jual helm safety, sepatu safety, sarung tangan, rompi, dan APD berkualitas dengan harga terjangkau. Gratis ongkir untuk pembelian tertentu." />
-    <meta property="og:title" content="Mitra Safety Indonesia - Peralatan Keselamatan Kerja" />
-    <meta property="og:description" content="Toko perlengkapan keselamatan kerja terlengkap. Produk berkualitas, harga terjangkau, pengiriman cepat ke seluruh Indonesia." />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <!-- Konfigurasi Viewport untuk Mobile / Mobile Viewport Configuration -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5, user-scalable=yes" />
+    
+    <!-- Pengaturan Bahasa dan Lokalisasi / Language and Localization Settings -->
+    <meta name="language" content="Indonesian" />
+    <meta http-equiv="content-language" content="id-ID" />
+    
+    <!-- Warna Tema untuk Browser Mobile / Theme Color for Mobile Browsers -->
+    <meta name="theme-color" content="#dc2626" />
+    <meta name="msapplication-TileColor" content="#dc2626" />
+    
+    <!-- Judul Halaman / Page Title -->
+    <title>Mitra Safety - Perlengkapan Keselamatan Kerja Terlengkap di Indonesia</title>
+    
+    <!-- Deskripsi Meta untuk SEO / Meta Description for SEO -->
+    <meta name="description" content="Mitra Safety menyediakan perlengkapan keselamatan kerja terlengkap di Indonesia. Melayani B2C dan B2B dengan produk helm safety, sepatu safety, sarung tangan, rompi, masker, kacamata, dan APD berkualitas tinggi. Gratis ongkir, harga kompetitif, pengiriman ke seluruh Indonesia." />
+    
+    <!-- Kata Kunci untuk SEO / Keywords for SEO -->
+    <meta name="keywords" content="helm safety, sepatu safety, sarung tangan safety, rompi safety, masker safety, kacamata safety, APD, alat pelindung diri, perlengkapan keselamatan kerja, peralatan K3, safety equipment Indonesia, toko safety online, jual helm proyek, jual sepatu kerja, safety gear, B2B safety equipment, grosir APD, supplier safety equipment" />
+    
+    <!-- Informasi Penulis dan Hak Cipta / Author and Copyright Information -->
+    <meta name="author" content="Mitra Safety Indonesia" />
+    <meta name="copyright" content="Mitra Safety Indonesia" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- URL Kanonik untuk SEO / Canonical URL for SEO -->
+    <link rel="canonical" href="https://mitrasafety.com/" />
+    
+    <!-- Open Graph Tags untuk Media Sosial / Open Graph Tags for Social Media -->
+    <meta property="og:title" content="Mitra Safety - Perlengkapan Keselamatan Kerja Terlengkap di Indonesia" />
+    <meta property="og:description" content="Toko perlengkapan keselamatan kerja terlengkap. Melayani B2C dan B2B dengan produk berkualitas, harga terjangkau, pengiriman cepat ke seluruh Indonesia. Gratis ongkir untuk pembelian tertentu." />
     <meta property="og:type" content="website" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <meta property="og:url" content="https://mitrasafety.com/" />
+    <meta property="og:site_name" content="Mitra Safety Indonesia" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:image" content="https://mitrasafety.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Mitra Safety - Perlengkapan Keselamatan Kerja Indonesia" />
+    
+    <!-- Twitter Card Tags untuk Berbagi di Twitter / Twitter Card Tags for Twitter Sharing -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mitra Safety - Perlengkapan Keselamatan Kerja Terlengkap di Indonesia" />
+    <meta name="twitter:description" content="Toko perlengkapan keselamatan kerja terlengkap. Melayani B2C dan B2B dengan produk berkualitas tinggi dan harga kompetitif." />
+    <meta name="twitter:image" content="https://mitrasafety.com/twitter-image.jpg" />
+    <meta name="twitter:image:alt" content="Mitra Safety - Perlengkapan Keselamatan Kerja Indonesia" />
+    
+    <!-- PWA Meta Tags untuk Aplikasi Web Progresif / PWA Meta Tags for Progressive Web App -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Mitra Safety" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Mitra Safety" />
+    
+    <!-- Ikon Apple Touch untuk iOS / Apple Touch Icons for iOS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    
+    <!-- Petunjuk Sumber Daya untuk Performa / Resource Hints for Performance -->
+    <!-- DNS Prefetch untuk domain eksternal / DNS Prefetch for external domains -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    
+    <!-- Preconnect untuk koneksi lebih cepat / Preconnect for faster connections -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Preload Font Kritis untuk Performa / Preload Critical Fonts for Performance -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" as="style" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" />
+    
+    <!-- Format Detection untuk Mobile / Format Detection for Mobile -->
+    <meta name="format-detection" content="telephone=yes" />
+    <meta name="format-detection" content="address=no" />
+    
+    <!-- Keamanan dan Privasi / Security and Privacy -->
+    <meta name="referrer" content="origin-when-cross-origin" />
   </head>
   <body>
     <div id="root"></div>

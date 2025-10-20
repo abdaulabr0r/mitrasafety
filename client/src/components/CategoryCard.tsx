@@ -19,13 +19,14 @@ export default function CategoryCard({ name, icon, productCount, onClick }: Cate
         data-testid={`card-category-${name.toLowerCase().replace(/\s+/g, '-')}`}
       >
         <div className="flex items-center gap-4 p-4">
+          {/* Ikon kategori dengan label aksesibilitas - Category icon with accessibility label */}
           <motion.div 
             className="flex h-16 w-16 items-center justify-center rounded-md bg-primary/10 text-4xl"
             whileHover={{ scale: 1.1, rotate: 5 }}
             transition={{ duration: 0.2 }}
             style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif' }}
           >
-            <span role="img" aria-label={`Icon ${name}`} className="select-none">
+            <span role="img" aria-label={`Ikon ${name}`} className="select-none">
               {icon}
             </span>
           </motion.div>

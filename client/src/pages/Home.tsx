@@ -140,7 +140,7 @@ export default function Home() {
 
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col" lang="id">
       <Header
         cartItemCount={totalCartItems}
         onCartClick={openCart}
@@ -148,19 +148,21 @@ export default function Home() {
         onCategoryClick={handleCategoryClick}
       />
 
-      <main className="flex-1">
+      {/* Konten utama halaman - Main page content */}
+      <main className="flex-1" id="main-content" role="main">
         <Hero onShopNowClick={() => handleCategoryClick("helmet")} />
 
-        <section className="container mx-auto px-4 py-8 md:py-12">
+        {/* Bagian kategori produk - Product categories section */}
+        <section className="container mx-auto px-4 py-8 md:py-12" aria-labelledby="categories-heading">
           <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-foreground" data-testid="text-categories-title">
+            <h2 id="categories-heading" className="text-2xl font-bold text-foreground" data-testid="text-categories-title">
               Kategori Produk
             </h2>
           </div>
           {categoriesLoading ? (
             <CategoryGridSkeleton />
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list" aria-label="Daftar kategori produk">
               {categories.map((category, index) => (
                 <CategoryCard
                   key={category.id}
@@ -174,9 +176,10 @@ export default function Home() {
           )}
         </section>
 
-        <section id="products-section" className="container mx-auto px-4 py-8 md:py-12">
+        {/* Bagian daftar produk - Products listing section */}
+        <section id="products-section" className="container mx-auto px-4 py-8 md:py-12" aria-labelledby="products-heading">
           <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
-            <h2 className="text-2xl font-bold text-foreground" data-testid="text-products-title">
+            <h2 id="products-heading" className="text-2xl font-bold text-foreground" data-testid="text-products-title">
               {filters.selectedCategories.length === 1
                 ? categories.find((c) => c.id === filters.selectedCategories[0])?.name
                 : "Semua Produk"}
@@ -187,18 +190,19 @@ export default function Home() {
                   variant="outline"
                   onClick={handleClearFilters}
                   data-testid="button-clear-all-filters"
+                  aria-label="Hapus semua filter produk"
                 >
                   Hapus Filter
                 </Button>
               )}
               <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="outline" className="gap-2 md:hidden" data-testid="button-filter-mobile">
-                    <Filter className="h-4 w-4" />
+                  <Button variant="outline" className="gap-2 md:hidden" data-testid="button-filter-mobile" aria-label="Buka panel filter produk">
+                    <Filter className="h-4 w-4" aria-hidden="true" />
                     Filter
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-80">
+                <SheetContent side="left" className="w-80" aria-label="Panel filter produk mobile">
                   <div className="pt-6">
                     <FilterSidebar
                       priceRange={filters.priceRange}
@@ -216,7 +220,8 @@ export default function Home() {
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-            <aside className="hidden lg:block">
+            {/* Sidebar filter desktop - Desktop filter sidebar */}
+            <aside className="hidden lg:block" aria-label="Filter produk">
               <FilterSidebar
                 priceRange={filters.priceRange}
                 onPriceRangeChange={(range) => updateFilters({ priceRange: range })}
@@ -228,20 +233,21 @@ export default function Home() {
               />
             </aside>
 
-            <div>
+            {/* Grid produk - Product grid */}
+            <div role="region" aria-live="polite" aria-atomic="false" aria-label="Hasil pencarian produk">
               {productsLoading ? (
                 <ProductGridSkeleton />
               ) : filteredProducts.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-16 text-center">
+                <div className="flex flex-col items-center justify-center py-16 text-center" role="status">
                   <p className="text-lg text-muted-foreground mb-4">
                     Tidak ada produk yang sesuai dengan filter Anda
                   </p>
-                  <Button onClick={handleClearFilters} variant="outline">
+                  <Button onClick={handleClearFilters} variant="outline" aria-label="Hapus semua filter untuk melihat produk">
                     Hapus Filter
                   </Button>
                 </div>
               ) : (
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" role="list" aria-label={`${filteredProducts.length} produk ditemukan`}>
                   {filteredProducts.map((product, index) => (
                     <ProductCard
                       key={product.id}
@@ -262,37 +268,38 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-card py-12 md:py-16">
+        {/* Bagian keunggulan - Benefits section */}
+        <section className="bg-card py-12 md:py-16" aria-labelledby="benefits-heading">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">
+            <h2 id="benefits-heading" className="mb-4 text-2xl font-bold text-foreground md:text-3xl">
               Mengapa Memilih Mitra Safety?
             </h2>
             <p className="mb-8 text-muted-foreground max-w-2xl mx-auto">
               Kami berkomitmen menyediakan perlengkapan keselamatan kerja berkualitas tinggi
               dengan harga terjangkau untuk melindungi pekerja Indonesia.
             </p>
-            <div className="grid gap-6 md:grid-cols-3">
-              <div className="rounded-md border bg-background p-6">
-                <div className="mb-3 text-4xl">✓</div>
+            <div className="grid gap-6 md:grid-cols-3" role="list" aria-label="Keunggulan Mitra Safety">
+              <article className="rounded-md border bg-background p-6">
+                <div className="mb-3 text-4xl" role="img" aria-label="Ikon checklist">✓</div>
                 <h3 className="mb-2 font-semibold text-foreground">Produk Berstandar SNI</h3>
                 <p className="text-sm text-muted-foreground">
                   Semua produk telah tersertifikasi dan memenuhi standar keselamatan nasional
                 </p>
-              </div>
-              <div className="rounded-md border bg-background p-6">
-                <div className="mb-3 text-4xl">🚚</div>
+              </article>
+              <article className="rounded-md border bg-background p-6">
+                <div className="mb-3 text-4xl" role="img" aria-label="Ikon truk pengiriman">🚚</div>
                 <h3 className="mb-2 font-semibold text-foreground">Pengiriman Cepat</h3>
                 <p className="text-sm text-muted-foreground">
                   Gratis ongkir untuk pembelian minimal Rp 500.000 ke seluruh Indonesia
                 </p>
-              </div>
-              <div className="rounded-md border bg-background p-6">
-                <div className="mb-3 text-4xl">💯</div>
+              </article>
+              <article className="rounded-md border bg-background p-6">
+                <div className="mb-3 text-4xl" role="img" aria-label="Ikon seratus persen">💯</div>
                 <h3 className="mb-2 font-semibold text-foreground">Dipercaya 500+ Perusahaan</h3>
                 <p className="text-sm text-muted-foreground">
                   Menjadi mitra terpercaya berbagai industri di seluruh Indonesia
                 </p>
-              </div>
+              </article>
             </div>
           </div>
         </section>
