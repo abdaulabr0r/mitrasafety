@@ -13,7 +13,7 @@ import {
   categories,
   orders
 } from "@shared/schema";
-import { eq, and, gte, lte, sql, ilike } from "drizzle-orm";
+import { eq, and, gte, lte, sql, like } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -80,11 +80,12 @@ export class DbStorage implements IStorage {
     let conditions = [];
 
     if (params.query) {
-      conditions.push(ilike(products.name, `%${params.query}%`));
+      conditions.push(like(products.name, `%${params.query}%`));
     }
 
     if (params.categories && params.categories.length > 0) {
-      conditions.push(sql`${products.category} = ANY(${params.categories})`);
+      const categoryConditions = params.categories.map(cat => eq(products.category, cat));
+      conditions.push(sql`(${categoryConditions.join(' OR ')})`);
     }
 
     if (params.minPrice !== undefined) {

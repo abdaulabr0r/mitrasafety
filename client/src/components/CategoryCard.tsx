@@ -1,5 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
+import AnimatedCard from "./AnimatedCard";
 
 interface CategoryCardProps {
   name: string;
@@ -10,27 +12,41 @@ interface CategoryCardProps {
 
 export default function CategoryCard({ name, icon, productCount, onClick }: CategoryCardProps) {
   return (
-    <Card
-      className="hover-elevate active-elevate-2 cursor-pointer overflow-hidden transition-shadow"
-      onClick={onClick}
-      data-testid={`card-category-${name.toLowerCase().replace(/\s+/g, '-')}`}
-    >
-      <div className="flex items-center gap-4 p-4">
-        <div className="flex h-16 w-16 items-center justify-center rounded-md bg-primary/10 text-4xl">
-          {icon}
+    <AnimatedCard>
+      <Card
+        className="hover-elevate active-elevate-2 cursor-pointer overflow-hidden transition-shadow"
+        onClick={onClick}
+        data-testid={`card-category-${name.toLowerCase().replace(/\s+/g, '-')}`}
+      >
+        <div className="flex items-center gap-4 p-4">
+          <motion.div 
+            className="flex h-16 w-16 items-center justify-center rounded-md bg-primary/10 text-4xl"
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            transition={{ duration: 0.2 }}
+            style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif' }}
+          >
+            <span role="img" aria-label={`Icon ${name}`} className="select-none">
+              {icon}
+            </span>
+          </motion.div>
+          <div className="flex-1">
+            <h3 className="font-semibold text-foreground" data-testid="text-category-name">
+              {name}
+            </h3>
+            {productCount !== undefined && (
+              <p className="text-sm text-muted-foreground" data-testid="text-product-count">
+                {productCount} produk
+              </p>
+            )}
+          </div>
+          <motion.div
+            whileHover={{ x: 5 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ChevronRight className="h-5 w-5 text-muted-foreground" />
+          </motion.div>
         </div>
-        <div className="flex-1">
-          <h3 className="font-semibold text-foreground" data-testid="text-category-name">
-            {name}
-          </h3>
-          {productCount !== undefined && (
-            <p className="text-sm text-muted-foreground" data-testid="text-product-count">
-              {productCount} produk
-            </p>
-          )}
-        </div>
-        <ChevronRight className="h-5 w-5 text-muted-foreground" />
-      </div>
-    </Card>
+      </Card>
+    </AnimatedCard>
   );
 }

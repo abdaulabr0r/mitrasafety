@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CategoryCard from "@/components/CategoryCard";
@@ -13,198 +13,74 @@ import { Button } from "@/components/ui/button";
 import { Filter } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-import helmetImage from "@assets/generated_images/Red_safety_helmet_product_photo_b5570fe7.png";
-import glovesImage from "@assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png";
-import vestImage from "@assets/generated_images/Safety_vest_product_photo_f0077f14.png";
-import bootsImage from "@assets/generated_images/Safety_boots_product_photo_a89a15d4.png";
-import gogglesImage from "@assets/generated_images/Safety_goggles_product_photo_3808d9b3.png";
-import maskImage from "@assets/generated_images/Safety_mask_product_photo_5ed8c680.png";
-import helmetYellowImage from "@assets/generated_images/Yellow_hard_hat_product_photo_a25e423f.png";
+// Zustand stores
+import { useCartStore } from "@/stores/useCartStore";
+import { useProductStore } from "@/stores/useProductStore";
 
-//todo: remove mock functionality
-const mockProducts = [
-  {
-    id: "1",
-    name: "Helm Safety Proyek MSA V-Gard dengan Ventilasi",
-    price: 125000,
-    originalPrice: 175000,
-    description: "Helm safety premium dengan teknologi ventilasi terbaik untuk kenyamanan maksimal. Dilengkapi dengan suspensi 4-titik yang dapat disesuaikan dan tali dagu yang kuat.",
-    imageUrl: helmetImage,
-    images: [helmetImage, helmetImage, helmetImage, helmetImage],
-    category: "helmet",
-    badge: "Best Seller",
-    inStock: true,
-    specifications: [
-      { label: "Material", value: "ABS High Impact" },
-      { label: "Berat", value: "350 gram" },
-      { label: "Sertifikasi", value: "SNI, ISO 9001" },
-      { label: "Warna", value: "Merah, Kuning, Putih" },
-    ],
-  },
-  {
-    id: "2",
-    name: "Sarung Tangan Safety Premium Anti-Slip",
-    price: 45000,
-    description: "Sarung tangan dengan grip anti-slip untuk pekerjaan presisi dan perlindungan tangan maksimal.",
-    imageUrl: glovesImage,
-    images: [glovesImage, glovesImage],
-    category: "gloves",
-    inStock: true,
-    specifications: [
-      { label: "Material", value: "Kulit Sintetis" },
-      { label: "Ukuran", value: "L, XL" },
-    ],
-  },
-  {
-    id: "3",
-    name: "Rompi Safety High-Visibility dengan Reflektif",
-    price: 65000,
-    originalPrice: 85000,
-    description: "Rompi safety dengan strip reflektif untuk visibilitas maksimal di area kerja.",
-    imageUrl: vestImage,
-    images: [vestImage, vestImage, vestImage],
-    category: "vest",
-    inStock: true,
-    specifications: [
-      { label: "Material", value: "Polyester" },
-      { label: "Warna", value: "Orange, Kuning" },
-    ],
-  },
-  {
-    id: "4",
-    name: "Sepatu Safety Boot Steel Toe Cap",
-    price: 350000,
-    description: "Sepatu safety dengan pelindung baja pada ujung kaki untuk perlindungan maksimal.",
-    imageUrl: bootsImage,
-    images: [bootsImage, bootsImage],
-    category: "boots",
-    inStock: true,
-    specifications: [
-      { label: "Material", value: "Kulit Asli" },
-      { label: "Sol", value: "Anti-slip Rubber" },
-      { label: "Ukuran", value: "39-45" },
-    ],
-  },
-  {
-    id: "5",
-    name: "Kacamata Safety Anti-Fog UV Protection",
-    price: 55000,
-    originalPrice: 75000,
-    description: "Kacamata pelindung dengan teknologi anti-fog dan perlindungan UV.",
-    imageUrl: gogglesImage,
-    images: [gogglesImage, gogglesImage, gogglesImage],
-    category: "goggles",
-    badge: "Promo",
-    inStock: true,
-    specifications: [
-      { label: "Lensa", value: "Polycarbonate" },
-      { label: "Fitur", value: "Anti-Fog, UV400" },
-    ],
-  },
-  {
-    id: "6",
-    name: "Masker N95 Respirator 3M",
-    price: 25000,
-    description: "Masker N95 untuk perlindungan pernapasan dari partikel berbahaya.",
-    imageUrl: maskImage,
-    images: [maskImage],
-    category: "mask",
-    inStock: false,
-    specifications: [
-      { label: "Tingkat Filtrasi", value: "95%" },
-      { label: "Standar", value: "N95, NIOSH" },
-    ],
-  },
-  {
-    id: "7",
-    name: "Helm Safety Standar SNI Kuning",
-    price: 85000,
-    description: "Helm safety standar dengan sertifikasi SNI untuk berbagai jenis pekerjaan.",
-    imageUrl: helmetYellowImage,
-    images: [helmetYellowImage, helmetYellowImage],
-    category: "helmet",
-    inStock: true,
-    specifications: [
-      { label: "Material", value: "HDPE" },
-      { label: "Sertifikasi", value: "SNI" },
-    ],
-  },
-  {
-    id: "8",
-    name: "Sarung Tangan Kulit Safety Premium",
-    price: 75000,
-    originalPrice: 95000,
-    description: "Sarung tangan kulit premium untuk pekerjaan berat dengan perlindungan maksimal.",
-    imageUrl: glovesImage,
-    images: [glovesImage, glovesImage, glovesImage],
-    category: "gloves",
-    inStock: true,
-    specifications: [
-      { label: "Material", value: "Kulit Asli" },
-      { label: "Ukuran", value: "M, L, XL" },
-    ],
-  },
-];
+// API hooks
+import { useProducts } from "@/hooks/useProducts";
+import { useCategories } from "@/hooks/useCategories";
 
-//todo: remove mock functionality
-const mockCategories = [
-  { id: "helmet", name: "Helm Safety", icon: "🪖", productCount: 24 },
-  { id: "gloves", name: "Sarung Tangan", icon: "🧤", productCount: 18 },
-  { id: "vest", name: "Rompi Safety", icon: "🦺", productCount: 15 },
-  { id: "boots", name: "Sepatu Safety", icon: "👢", productCount: 12 },
-  { id: "goggles", name: "Kacamata Pelindung", icon: "🥽", productCount: 20 },
-  { id: "mask", name: "Masker & Respirator", icon: "😷", productCount: 16 },
-];
+// Loading components
+import { ProductGridSkeleton, CategoryGridSkeleton } from "@/components/LoadingSkeleton";
 
-interface CartItem {
-  id: string;
-  productId: string;
-  name: string;
-  price: number;
-  quantity: number;
-  imageUrl: string;
-}
+
 
 export default function Home() {
-  const [cartOpen, setCartOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<typeof mockProducts[0] | null>(null);
-  const [productDetailOpen, setProductDetailOpen] = useState(false);
-  
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [inStockOnly, setInStockOnly] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   
   const { toast } = useToast();
 
+  // Zustand stores
+  const {
+    items: cartItems,
+    isOpen: cartOpen,
+    addItem,
+    removeItem,
+    updateQuantity,
+    clearCart,
+    openCart,
+    closeCart,
+    getTotalItems,
+    getSubtotal,
+    getShipping,
+    getTotal,
+  } = useCartStore();
+
+  const {
+    filteredProducts,
+    selectedProduct,
+    isProductDetailOpen,
+    filters,
+    updateFilters,
+    clearFilters,
+    openProductDetail,
+    closeProductDetail,
+    setProducts,
+  } = useProductStore();
+
+  // API queries
+  const { data: products = [], isLoading: productsLoading } = useProducts();
+  const { data: categories = [], isLoading: categoriesLoading } = useCategories();
+
+  // Update products in store when API data changes
+  useEffect(() => {
+    if (products.length > 0) {
+      setProducts(products);
+    }
+  }, [products, setProducts]);
+
   const handleAddToCart = (productId: string, quantity: number = 1) => {
-    const product = mockProducts.find((p) => p.id === productId);
+    const product = products.find((p) => p.id === productId);
     if (!product) return;
 
-    setCartItems((prev) => {
-      const existingItem = prev.find((item) => item.productId === productId);
-      if (existingItem) {
-        return prev.map((item) =>
-          item.productId === productId
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
-      }
-      return [
-        ...prev,
-        {
-          id: `cart-${Date.now()}`,
-          productId: product.id,
-          name: product.name,
-          price: product.price,
-          quantity,
-          imageUrl: product.imageUrl,
-        },
-      ];
-    });
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.imageUrl,
+    }, quantity);
 
     toast({
       title: "Ditambahkan ke keranjang",
@@ -213,75 +89,62 @@ export default function Home() {
   };
 
   const handleUpdateQuantity = (productId: string, quantity: number) => {
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.productId === productId ? { ...item, quantity } : item
-      )
-    );
+    updateQuantity(productId, quantity);
   };
 
   const handleRemoveItem = (productId: string) => {
-    setCartItems((prev) => prev.filter((item) => item.productId !== productId));
+    removeItem(productId);
     toast({
       title: "Dihapus dari keranjang",
     });
   };
 
   const handleCategoryClick = (categoryId: string) => {
-    setSelectedCategories([categoryId]);
+    updateFilters({ selectedCategories: [categoryId] });
     const element = document.getElementById("products-section");
     element?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleCategoryToggle = (categoryId: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(categoryId)
-        ? prev.filter((c) => c !== categoryId)
-        : [...prev, categoryId]
-    );
+    const newCategories = filters.selectedCategories.includes(categoryId)
+      ? filters.selectedCategories.filter((c) => c !== categoryId)
+      : [...filters.selectedCategories, categoryId];
+    
+    updateFilters({ selectedCategories: newCategories });
   };
 
   const handleClearFilters = () => {
-    setPriceRange([0, 1000000]);
-    setSelectedCategories([]);
-    setInStockOnly(false);
-    setSearchQuery("");
+    clearFilters();
   };
 
-  const handleProductClick = (product: typeof mockProducts[0]) => {
-    setSelectedProduct(product);
-    setProductDetailOpen(true);
+  const handleProductClick = (product: any) => {
+    openProductDetail(product);
   };
 
-  const filteredProducts = mockProducts.filter((product) => {
-    const matchesCategory =
-      selectedCategories.length === 0 || selectedCategories.includes(product.category);
-    const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
-    const matchesStock = !inStockOnly || product.inStock;
-    const matchesSearch =
-      searchQuery === "" ||
-      product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesPrice && matchesStock && matchesSearch;
-  });
+  const handleSearch = (query: string) => {
+    updateFilters({ searchQuery: query });
+  };
 
-  const totalCartItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = subtotal >= 500000 ? 0 : 25000;
-  const total = subtotal + shipping;
+  const totalCartItems = getTotalItems();
+  const subtotal = getSubtotal();
+  const shipping = getShipping();
+  const total = getTotal();
 
   const hasActiveFilters =
-    selectedCategories.length > 0 ||
-    inStockOnly ||
-    priceRange[0] > 0 ||
-    priceRange[1] < 1000000 ||
-    searchQuery !== "";
+    filters.selectedCategories.length > 0 ||
+    filters.inStockOnly ||
+    filters.priceRange[0] > 0 ||
+    filters.priceRange[1] < 1000000 ||
+    filters.searchQuery !== "";
+
+
 
   return (
     <div className="flex min-h-screen flex-col">
       <Header
         cartItemCount={totalCartItems}
-        onCartClick={() => setCartOpen(true)}
-        onSearch={setSearchQuery}
+        onCartClick={openCart}
+        onSearch={handleSearch}
         onCategoryClick={handleCategoryClick}
       />
 
@@ -294,24 +157,28 @@ export default function Home() {
               Kategori Produk
             </h2>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {mockCategories.map((category) => (
-              <CategoryCard
-                key={category.id}
-                name={category.name}
-                icon={category.icon}
-                productCount={category.productCount}
-                onClick={() => handleCategoryClick(category.id)}
-              />
-            ))}
-          </div>
+          {categoriesLoading ? (
+            <CategoryGridSkeleton />
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {categories.map((category, index) => (
+                <CategoryCard
+                  key={category.id}
+                  name={category.name}
+                  icon={category.icon}
+                  productCount={category.productCount}
+                  onClick={() => handleCategoryClick(category.id)}
+                />
+              ))}
+            </div>
+          )}
         </section>
 
         <section id="products-section" className="container mx-auto px-4 py-8 md:py-12">
           <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
             <h2 className="text-2xl font-bold text-foreground" data-testid="text-products-title">
-              {selectedCategories.length === 1
-                ? mockCategories.find((c) => c.id === selectedCategories[0])?.name
+              {filters.selectedCategories.length === 1
+                ? categories.find((c) => c.id === filters.selectedCategories[0])?.name
                 : "Semua Produk"}
             </h2>
             <div className="flex items-center gap-2">
@@ -334,12 +201,12 @@ export default function Home() {
                 <SheetContent side="left" className="w-80">
                   <div className="pt-6">
                     <FilterSidebar
-                      priceRange={priceRange}
-                      onPriceRangeChange={setPriceRange}
-                      selectedCategories={selectedCategories}
+                      priceRange={filters.priceRange}
+                      onPriceRangeChange={(range) => updateFilters({ priceRange: range })}
+                      selectedCategories={filters.selectedCategories}
                       onCategoryToggle={handleCategoryToggle}
-                      inStockOnly={inStockOnly}
-                      onInStockToggle={setInStockOnly}
+                      inStockOnly={filters.inStockOnly}
+                      onInStockToggle={(inStock) => updateFilters({ inStockOnly: inStock })}
                       onClearFilters={handleClearFilters}
                     />
                   </div>
@@ -351,18 +218,20 @@ export default function Home() {
           <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
             <aside className="hidden lg:block">
               <FilterSidebar
-                priceRange={priceRange}
-                onPriceRangeChange={setPriceRange}
-                selectedCategories={selectedCategories}
+                priceRange={filters.priceRange}
+                onPriceRangeChange={(range) => updateFilters({ priceRange: range })}
+                selectedCategories={filters.selectedCategories}
                 onCategoryToggle={handleCategoryToggle}
-                inStockOnly={inStockOnly}
-                onInStockToggle={setInStockOnly}
+                inStockOnly={filters.inStockOnly}
+                onInStockToggle={(inStock) => updateFilters({ inStockOnly: inStock })}
                 onClearFilters={handleClearFilters}
               />
             </aside>
 
             <div>
-              {filteredProducts.length === 0 ? (
+              {productsLoading ? (
+                <ProductGridSkeleton />
+              ) : filteredProducts.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-16 text-center">
                   <p className="text-lg text-muted-foreground mb-4">
                     Tidak ada produk yang sesuai dengan filter Anda
@@ -373,7 +242,7 @@ export default function Home() {
                 </div>
               ) : (
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {filteredProducts.map((product) => (
+                  {filteredProducts.map((product, index) => (
                     <ProductCard
                       key={product.id}
                       id={product.id}
@@ -433,23 +302,23 @@ export default function Home() {
 
       <CartSheet
         open={cartOpen}
-        onOpenChange={setCartOpen}
+        onOpenChange={closeCart}
         items={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
         onCheckout={() => {
-          setCartOpen(false);
+          closeCart();
           setCheckoutOpen(true);
         }}
       />
 
       <ProductDetailModal
-        open={productDetailOpen}
-        onOpenChange={setProductDetailOpen}
+        open={isProductDetailOpen}
+        onOpenChange={closeProductDetail}
         product={selectedProduct}
         onAddToCart={(id, qty) => {
           handleAddToCart(id, qty);
-          setProductDetailOpen(false);
+          closeProductDetail();
         }}
       />
 
@@ -459,7 +328,7 @@ export default function Home() {
         total={total}
         onComplete={() => {
           setCheckoutOpen(false);
-          setCartItems([]);
+          clearCart();
           toast({
             title: "Pesanan Berhasil!",
             description: "Terima kasih telah berbelanja di Mitra Safety Indonesia.",

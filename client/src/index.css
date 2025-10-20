@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Emoji support for better cross-platform compatibility */
+.emoji {
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Android Emoji', 'EmojiSymbols', sans-serif;
+  font-variant-emoji: emoji;
+}
+
+/* Ensure proper emoji rendering */
+span[role="img"] {
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Android Emoji', 'EmojiSymbols', sans-serif;
+  font-variant-emoji: emoji;
+  display: inline-block;
+}
+
 /* LIGHT MODE */
 :root {
   --button-outline: rgba(0,0,0, .10);

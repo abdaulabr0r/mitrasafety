@@ -1,6 +1,10 @@
-import { storage } from "./storage";
+import { db } from "./db";
+import { categories, products } from "@shared/schema";
+import { eq } from "drizzle-orm";
+import type { InsertCategory, InsertProduct } from "@shared/schema";
 
-const categories = [
+// Sample categories data
+const sampleCategories: InsertCategory[] = [
   { id: "helmet", name: "Helm Safety", icon: "🪖", productCount: 0 },
   { id: "gloves", name: "Sarung Tangan", icon: "🧤", productCount: 0 },
   { id: "vest", name: "Rompi Safety", icon: "🦺", productCount: 0 },
@@ -9,183 +13,193 @@ const categories = [
   { id: "mask", name: "Masker & Respirator", icon: "😷", productCount: 0 },
 ];
 
-const products = [
+// Sample products data
+const sampleProducts: InsertProduct[] = [
   {
     name: "Helm Safety Proyek MSA V-Gard dengan Ventilasi",
+    description: "Helm safety premium dengan teknologi ventilasi terbaik untuk kenyamanan maksimal. Dilengkapi dengan suspensi 4-titik yang dapat disesuaikan dan tali dagu yang kuat. Memenuhi standar SNI dan ISO untuk perlindungan kepala di berbagai lingkungan kerja.",
     price: 125000,
     originalPrice: 175000,
-    description: "Helm safety premium dengan teknologi ventilasi terbaik untuk kenyamanan maksimal. Dilengkapi dengan suspensi 4-titik yang dapat disesuaikan dan tali dagu yang kuat. Memenuhi standar SNI dan ISO untuk perlindungan kepala di berbagai lingkungan kerja.",
-    imageUrl: "/attached_assets/generated_images/Red_safety_helmet_product_photo_b5570fe7.png",
-    images: [
-      "/attached_assets/generated_images/Red_safety_helmet_product_photo_b5570fe7.png",
-      "/attached_assets/generated_images/Red_safety_helmet_product_photo_b5570fe7.png",
-      "/attached_assets/generated_images/Red_safety_helmet_product_photo_b5570fe7.png",
-    ],
     category: "helmet",
-    badge: "Best Seller",
+    imageUrl: "/assets/generated_images/Red_safety_helmet_product_photo_b5570fe7.png",
+    images: JSON.stringify([
+      "/assets/generated_images/Red_safety_helmet_product_photo_b5570fe7.png",
+      "/assets/generated_images/Red_safety_helmet_product_photo_b5570fe7.png",
+      "/assets/generated_images/Red_safety_helmet_product_photo_b5570fe7.png",
+      "/assets/generated_images/Red_safety_helmet_product_photo_b5570fe7.png"
+    ]),
     inStock: true,
-    specifications: [
+    badge: "Best Seller",
+    specifications: JSON.stringify([
       { label: "Material", value: "ABS High Impact" },
       { label: "Berat", value: "350 gram" },
       { label: "Sertifikasi", value: "SNI, ISO 9001" },
       { label: "Warna", value: "Merah, Kuning, Putih" },
-    ],
+    ]),
   },
   {
     name: "Sarung Tangan Safety Premium Anti-Slip",
+    description: "Sarung tangan dengan grip anti-slip untuk pekerjaan presisi dan perlindungan tangan maksimal. Terbuat dari bahan berkualitas tinggi yang tahan lama dan nyaman digunakan.",
     price: 45000,
-    description: "Sarung tangan dengan grip anti-slip untuk pekerjaan presisi dan perlindungan tangan maksimal. Material kulit sintetis premium yang tahan lama dan nyaman digunakan sepanjang hari.",
-    imageUrl: "/attached_assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png",
-    images: [
-      "/attached_assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png",
-      "/attached_assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png",
-    ],
     category: "gloves",
+    imageUrl: "/assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png",
+    images: JSON.stringify([
+      "/assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png",
+      "/assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png"
+    ]),
     inStock: true,
-    specifications: [
+    specifications: JSON.stringify([
       { label: "Material", value: "Kulit Sintetis" },
       { label: "Ukuran", value: "L, XL" },
-    ],
+      { label: "Sertifikasi", value: "CE, EN388" },
+    ]),
   },
   {
     name: "Rompi Safety High-Visibility dengan Reflektif",
+    description: "Rompi safety dengan strip reflektif untuk visibilitas maksimal di area kerja. Desain ergonomis dan bahan yang breathable untuk kenyamanan sepanjang hari.",
     price: 65000,
     originalPrice: 85000,
-    description: "Rompi safety dengan strip reflektif untuk visibilitas maksimal di area kerja. Cocok untuk pekerja konstruksi, jalan raya, dan area berisiko tinggi.",
-    imageUrl: "/attached_assets/generated_images/Safety_vest_product_photo_f0077f14.png",
-    images: [
-      "/attached_assets/generated_images/Safety_vest_product_photo_f0077f14.png",
-      "/attached_assets/generated_images/Safety_vest_product_photo_f0077f14.png",
-    ],
     category: "vest",
+    imageUrl: "/assets/generated_images/Safety_vest_product_photo_f0077f14.png",
+    images: [
+      "/assets/generated_images/Safety_vest_product_photo_f0077f14.png",
+      "/assets/generated_images/Safety_vest_product_photo_f0077f14.png",
+      "/assets/generated_images/Safety_vest_product_photo_f0077f14.png"
+    ],
     inStock: true,
     specifications: [
       { label: "Material", value: "Polyester" },
       { label: "Warna", value: "Orange, Kuning" },
+      { label: "Standar", value: "EN ISO 20471" },
     ],
   },
   {
     name: "Sepatu Safety Boot Steel Toe Cap",
+    description: "Sepatu safety dengan pelindung baja pada ujung kaki untuk perlindungan maksimal. Sol anti-slip dan desain ergonomis untuk kenyamanan dan keamanan optimal.",
     price: 350000,
-    description: "Sepatu safety dengan pelindung baja pada ujung kaki untuk perlindungan maksimal. Dilengkapi dengan sol anti-slip dan material kulit asli yang tahan lama.",
-    imageUrl: "/attached_assets/generated_images/Safety_boots_product_photo_a89a15d4.png",
-    images: [
-      "/attached_assets/generated_images/Safety_boots_product_photo_a89a15d4.png",
-      "/attached_assets/generated_images/Safety_boots_product_photo_a89a15d4.png",
-    ],
     category: "boots",
+    imageUrl: "/assets/generated_images/Safety_boots_product_photo_a89a15d4.png",
+    images: [
+      "/assets/generated_images/Safety_boots_product_photo_a89a15d4.png",
+      "/assets/generated_images/Safety_boots_product_photo_a89a15d4.png"
+    ],
     inStock: true,
     specifications: [
       { label: "Material", value: "Kulit Asli" },
       { label: "Sol", value: "Anti-slip Rubber" },
       { label: "Ukuran", value: "39-45" },
+      { label: "Sertifikasi", value: "SNI, EN ISO 20345" },
     ],
   },
   {
     name: "Kacamata Safety Anti-Fog UV Protection",
+    description: "Kacamata pelindung dengan teknologi anti-fog dan perlindungan UV. Lensa polycarbonate yang tahan benturan dan frame yang nyaman untuk penggunaan jangka panjang.",
     price: 55000,
     originalPrice: 75000,
-    description: "Kacamata pelindung dengan teknologi anti-fog dan perlindungan UV. Cocok untuk berbagai jenis pekerjaan yang memerlukan perlindungan mata.",
-    imageUrl: "/attached_assets/generated_images/Safety_goggles_product_photo_3808d9b3.png",
-    images: [
-      "/attached_assets/generated_images/Safety_goggles_product_photo_3808d9b3.png",
-      "/attached_assets/generated_images/Safety_goggles_product_photo_3808d9b3.png",
-    ],
     category: "goggles",
-    badge: "Promo",
+    imageUrl: "/assets/generated_images/Safety_goggles_product_photo_3808d9b3.png",
+    images: [
+      "/assets/generated_images/Safety_goggles_product_photo_3808d9b3.png",
+      "/assets/generated_images/Safety_goggles_product_photo_3808d9b3.png",
+      "/assets/generated_images/Safety_goggles_product_photo_3808d9b3.png"
+    ],
     inStock: true,
+    badge: "Promo",
     specifications: [
       { label: "Lensa", value: "Polycarbonate" },
       { label: "Fitur", value: "Anti-Fog, UV400" },
+      { label: "Sertifikasi", value: "ANSI Z87.1" },
     ],
   },
   {
     name: "Masker N95 Respirator 3M",
+    description: "Masker N95 untuk perlindungan pernapasan dari partikel berbahaya. Tingkat filtrasi 95% dengan desain yang nyaman dan seal yang baik.",
     price: 25000,
-    description: "Masker N95 untuk perlindungan pernapasan dari partikel berbahaya. Tingkat filtrasi 95% sesuai standar NIOSH.",
-    imageUrl: "/attached_assets/generated_images/Safety_mask_product_photo_5ed8c680.png",
-    images: ["/attached_assets/generated_images/Safety_mask_product_photo_5ed8c680.png"],
     category: "mask",
+    imageUrl: "/assets/generated_images/Safety_mask_product_photo_5ed8c680.png",
+    images: ["/assets/generated_images/Safety_mask_product_photo_5ed8c680.png"],
     inStock: false,
     specifications: [
       { label: "Tingkat Filtrasi", value: "95%" },
       { label: "Standar", value: "N95, NIOSH" },
+      { label: "Kemasan", value: "Box isi 20 pcs" },
     ],
   },
   {
     name: "Helm Safety Standar SNI Kuning",
+    description: "Helm safety standar dengan sertifikasi SNI untuk berbagai jenis pekerjaan. Desain klasik dengan perlindungan yang handal dan harga terjangkau.",
     price: 85000,
-    description: "Helm safety standar dengan sertifikasi SNI untuk berbagai jenis pekerjaan. Material HDPE yang kuat dan tahan benturan.",
-    imageUrl: "/attached_assets/generated_images/Yellow_hard_hat_product_photo_a25e423f.png",
-    images: [
-      "/attached_assets/generated_images/Yellow_hard_hat_product_photo_a25e423f.png",
-      "/attached_assets/generated_images/Yellow_hard_hat_product_photo_a25e423f.png",
-    ],
     category: "helmet",
+    imageUrl: "/assets/generated_images/Yellow_hard_hat_product_photo_a25e423f.png",
+    images: [
+      "/assets/generated_images/Yellow_hard_hat_product_photo_a25e423f.png",
+      "/assets/generated_images/Yellow_hard_hat_product_photo_a25e423f.png"
+    ],
     inStock: true,
     specifications: [
       { label: "Material", value: "HDPE" },
       { label: "Sertifikasi", value: "SNI" },
+      { label: "Warna", value: "Kuning, Putih, Biru" },
     ],
   },
   {
     name: "Sarung Tangan Kulit Safety Premium",
+    description: "Sarung tangan kulit premium untuk pekerjaan berat dengan perlindungan maksimal. Terbuat dari kulit asli berkualitas tinggi yang tahan lama.",
     price: 75000,
     originalPrice: 95000,
-    description: "Sarung tangan kulit premium untuk pekerjaan berat dengan perlindungan maksimal. Material kulit asli yang kuat dan tahan lama.",
-    imageUrl: "/attached_assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png",
-    images: [
-      "/attached_assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png",
-      "/attached_assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png",
-    ],
     category: "gloves",
+    imageUrl: "/assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png",
+    images: [
+      "/assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png",
+      "/assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png",
+      "/assets/generated_images/Yellow_safety_gloves_product_photo_58de2dd7.png"
+    ],
     inStock: true,
     specifications: [
       { label: "Material", value: "Kulit Asli" },
       { label: "Ukuran", value: "M, L, XL" },
+      { label: "Fitur", value: "Reinforced Palm" },
     ],
   },
 ];
 
-async function seed() {
-  console.log("Seeding database...");
+export async function seedDatabase() {
+  try {
+    console.log("🌱 Starting database seeding...");
 
-  console.log("Creating categories...");
-  for (const category of categories) {
-    try {
-      await storage.createCategory(category);
-      console.log(`Created category: ${category.name}`);
-    } catch (error) {
-      console.log(`Category ${category.name} already exists or error occurred`);
+    // Clear existing data
+    await db.delete(products);
+    await db.delete(categories);
+
+    // Insert categories
+    console.log("📂 Inserting categories...");
+    await db.insert(categories).values(sampleCategories);
+
+    // Insert products
+    console.log("📦 Inserting products...");
+    await db.insert(products).values(sampleProducts);
+
+    // Update category product counts
+    console.log("🔢 Updating category product counts...");
+    for (const category of sampleCategories) {
+      const productCount = sampleProducts.filter(p => p.category === category.id).length;
+      await db.update(categories)
+        .set({ productCount })
+        .where(eq(categories.id, category.id));
     }
-  }
 
-  console.log("Creating products...");
-  for (const product of products) {
-    try {
-      await storage.createProduct(product);
-      console.log(`Created product: ${product.name}`);
-    } catch (error) {
-      console.log(`Product ${product.name} already exists or error occurred`);
-    }
-  }
+    console.log("✅ Database seeding completed successfully!");
+    console.log(`📊 Inserted ${sampleCategories.length} categories and ${sampleProducts.length} products`);
 
-  console.log("Updating category product counts...");
-  const categoryCount: { [key: string]: number } = {};
-  for (const product of products) {
-    categoryCount[product.category] = (categoryCount[product.category] || 0) + 1;
+  } catch (error) {
+    console.error("❌ Error seeding database:", error);
+    throw error;
   }
-
-  for (const [categoryId, count] of Object.entries(categoryCount)) {
-    await storage.updateCategoryProductCount(categoryId, count);
-    console.log(`Updated ${categoryId} count to ${count}`);
-  }
-
-  console.log("Seeding complete!");
-  process.exit(0);
 }
 
-seed().catch((error) => {
-  console.error("Seeding failed:", error);
-  process.exit(1);
-});
+// Run seeding if this file is executed directly
+if (import.meta.url === `file://${process.argv[1]}`) {
+  seedDatabase()
+    .then(() => process.exit(0))
+    .catch(() => process.exit(1));
+}

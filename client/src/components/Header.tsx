@@ -59,7 +59,14 @@ export default function Header({ cartItemCount = 0, onCartClick, onSearch, onCat
                       className="flex items-center gap-3 text-left hover-elevate active-elevate-2 rounded-md p-2"
                       data-testid={`button-category-${category.id}`}
                     >
-                      <span className="text-2xl">{category.icon}</span>
+                      <span 
+                        className="text-2xl select-none" 
+                        role="img" 
+                        aria-label={`Icon ${category.name}`}
+                        style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif' }}
+                      >
+                        {category.icon}
+                      </span>
                       <span className="text-foreground">{category.name}</span>
                     </button>
                   ))}
@@ -125,7 +132,14 @@ export default function Header({ cartItemCount = 0, onCartClick, onSearch, onCat
                 className="gap-2"
                 data-testid={`button-category-${category.id}`}
               >
-                <span>{category.icon}</span>
+                <span 
+                  role="img" 
+                  aria-label={`Icon ${category.name}`}
+                  className="select-none"
+                  style={{ fontFamily: 'Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif' }}
+                >
+                  {category.icon}
+                </span>
                 <span>{category.name}</span>
               </Button>
             ))}

@@ -86,17 +86,25 @@ export default function FilterSidebar({
       <div className="space-y-4 border-b pb-6">
         <h4 className="font-semibold text-foreground">Rentang Harga</h4>
         <div className="space-y-3">
-          <Slider
-            value={priceRange}
-            onValueChange={(value) => onPriceRangeChange(value as [number, number])}
-            min={0}
-            max={1000000}
-            step={10000}
-            data-testid="slider-price-range"
-          />
-          <div className="flex justify-between text-sm text-muted-foreground">
+          <div className="px-2">
+            <Slider
+              value={priceRange}
+              onValueChange={(value) => onPriceRangeChange(value as [number, number])}
+              min={0}
+              max={1000000}
+              step={10000}
+              className="w-full"
+              data-testid="slider-price-range"
+              dir="ltr"
+            />
+          </div>
+          <div className="flex justify-between text-sm text-muted-foreground px-2">
             <span data-testid="text-price-min">{formatPrice(priceRange[0])}</span>
             <span data-testid="text-price-max">{formatPrice(priceRange[1])}</span>
+          </div>
+          <div className="flex justify-between text-xs text-muted-foreground px-2">
+            <span>Minimum</span>
+            <span>Maksimum</span>
           </div>
         </div>
       </div>
