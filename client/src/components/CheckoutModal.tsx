@@ -144,202 +144,108 @@ export default function CheckoutModal({
                 <div className="grid gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="name">Nama Lengkap <span className="text-destructive">*</span></Label>
-                  <Input
-                    id="name"
-                    value={shippingData.name}
-                    onChange={(e) =>
-                      setShippingData({ ...shippingData, name: e.target.value })
-                    }
-                    placeholder="Masukkan nama lengkap"
-                    data-testid="input-name"
-                  />
-                </div>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Nomor Telepon *</Label>
                     <Input
-                      id="phone"
-                      type="tel"
-                      value={shippingData.phone}
+                      id="name"
+                      value={shippingData.name}
                       onChange={(e) =>
-                        setShippingData({ ...shippingData, phone: e.target.value })
+                        setShippingData({ ...shippingData, name: e.target.value })
                       }
-                      placeholder="08xxxxxxxxxx"
-                      data-testid="input-phone"
+                      placeholder="Masukkan nama lengkap"
+                      data-testid="input-name"
                     />
                   </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Nomor Telepon <span className="text-destructive">*</span></Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        value={shippingData.phone}
+                        onChange={(e) =>
+                          setShippingData({ ...shippingData, phone: e.target.value })
+                        }
+                        placeholder="08xxxxxxxxxx"
+                        data-testid="input-phone"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email (Opsional)</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={shippingData.email}
+                        onChange={(e) =>
+                          setShippingData({ ...shippingData, email: e.target.value })
+                        }
+                        placeholder="Untuk notifikasi pesanan"
+                        data-testid="input-email"
+                      />
+                    </div>
+                  </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={shippingData.email}
+                    <Label htmlFor="address">Alamat Lengkap <span className="text-destructive">*</span></Label>
+                    <Textarea
+                      id="address"
+                      value={shippingData.address}
                       onChange={(e) =>
-                        setShippingData({ ...shippingData, email: e.target.value })
+                        setShippingData({ ...shippingData, address: e.target.value })
                       }
-                      placeholder="email@example.com"
-                      data-testid="input-email"
+                      placeholder="Jalan, nomor rumah, RT/RW, kelurahan, kecamatan"
+                      rows={3}
+                      data-testid="input-address"
                     />
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="address">Alamat Lengkap *</Label>
-                  <Textarea
-                    id="address"
-                    value={shippingData.address}
-                    onChange={(e) =>
-                      setShippingData({ ...shippingData, address: e.target.value })
-                    }
-                    placeholder="Jalan, nomor rumah, RT/RW, kelurahan"
-                    rows={3}
-                    data-testid="input-address"
-                  />
-                </div>
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <div className="space-y-2">
-                    <Label htmlFor="province">Provinsi *</Label>
-                    <Select
-                      value={shippingData.province}
-                      onValueChange={(value) =>
-                        setShippingData({ ...shippingData, province: value })
-                      }
-                    >
-                      <SelectTrigger id="province" data-testid="select-province">
-                        <SelectValue placeholder="Pilih provinsi" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="jakarta">DKI Jakarta</SelectItem>
-                        <SelectItem value="jabar">Jawa Barat</SelectItem>
-                        <SelectItem value="jateng">Jawa Tengah</SelectItem>
-                        <SelectItem value="jatim">Jawa Timur</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="city">Kota/Kabupaten *</Label>
-                    <Select
-                      value={shippingData.city}
-                      onValueChange={(value) =>
-                        setShippingData({ ...shippingData, city: value })
-                      }
-                    >
-                      <SelectTrigger id="city" data-testid="select-city">
-                        <SelectValue placeholder="Pilih kota" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="jakarta-selatan">Jakarta Selatan</SelectItem>
-                        <SelectItem value="jakarta-pusat">Jakarta Pusat</SelectItem>
-                        <SelectItem value="bandung">Bandung</SelectItem>
-                        <SelectItem value="surabaya">Surabaya</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="postalCode">Kode Pos *</Label>
-                    <Input
-                      id="postalCode"
-                      value={shippingData.postalCode}
-                      onChange={(e) =>
-                        setShippingData({ ...shippingData, postalCode: e.target.value })
-                      }
-                      placeholder="12345"
-                      data-testid="input-postal-code"
-                    />
-                  </div>
-                </div>
-                  />
-                </div>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Nomor Telepon <span className="text-destructive">*</span></Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      value={shippingData.phone}
-                      onChange={(e) =>
-                        setShippingData({ ...shippingData, phone: e.target.value })
-                      }
-                      placeholder="08xxxxxxxxxx"
-                      data-testid="input-phone"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email (Opsional)</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={shippingData.email}
-                      onChange={(e) =>
-                        setShippingData({ ...shippingData, email: e.target.value })
-                      }
-                      placeholder="Untuk notifikasi pesanan"
-                      data-testid="input-email"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="address">Alamat Lengkap <span className="text-destructive">*</span></Label>
-                  <Textarea
-                    id="address"
-                    value={shippingData.address}
-                    onChange={(e) =>
-                      setShippingData({ ...shippingData, address: e.target.value })
-                    }
-                    placeholder="Jalan, nomor rumah, RT/RW, kelurahan, kecamatan"
-                    rows={3}
-                    data-testid="input-address"
-                  />
-                </div>
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <div className="space-y-2">
-                    <Label htmlFor="province">Provinsi <span className="text-destructive">*</span></Label>
-                    <Select
-                      value={shippingData.province}
-                      onValueChange={(value) =>
-                        setShippingData({ ...shippingData, province: value })
-                      }
-                    >
-                      <SelectTrigger id="province" data-testid="select-province">
-                        <SelectValue placeholder="Pilih provinsi" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="jakarta">DKI Jakarta</SelectItem>
-                        <SelectItem value="jabar">Jawa Barat</SelectItem>
-                        <SelectItem value="jateng">Jawa Tengah</SelectItem>
-                        <SelectItem value="jatim">Jawa Timur</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="city">Kota/Kabupaten <span className="text-destructive">*</span></Label>
-                    <Select
-                      value={shippingData.city}
-                      onValueChange={(value) =>
-                        setShippingData({ ...shippingData, city: value })
-                      }
-                    >
-                      <SelectTrigger id="city" data-testid="select-city">
-                        <SelectValue placeholder="Pilih kota" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="jakarta-selatan">Jakarta Selatan</SelectItem>
-                        <SelectItem value="jakarta-pusat">Jakarta Pusat</SelectItem>
-                        <SelectItem value="bandung">Bandung</SelectItem>
-                        <SelectItem value="surabaya">Surabaya</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="postalCode">Kode Pos <span className="text-destructive">*</span></Label>
-                    <Input
-                      id="postalCode"
-                      value={shippingData.postalCode}
-                      onChange={(e) =>
-                        setShippingData({ ...shippingData, postalCode: e.target.value })
-                      }
-                      placeholder="12345"
-                      data-testid="input-postal-code"
-                    />
+                  <div className="grid gap-4 sm:grid-cols-3">
+                    <div className="space-y-2">
+                      <Label htmlFor="province">Provinsi <span className="text-destructive">*</span></Label>
+                      <Select
+                        value={shippingData.province}
+                        onValueChange={(value) =>
+                          setShippingData({ ...shippingData, province: value })
+                        }
+                      >
+                        <SelectTrigger id="province" data-testid="select-province">
+                          <SelectValue placeholder="Pilih provinsi" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="jakarta">DKI Jakarta</SelectItem>
+                          <SelectItem value="jabar">Jawa Barat</SelectItem>
+                          <SelectItem value="jateng">Jawa Tengah</SelectItem>
+                          <SelectItem value="jatim">Jawa Timur</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="city">Kota/Kabupaten <span className="text-destructive">*</span></Label>
+                      <Select
+                        value={shippingData.city}
+                        onValueChange={(value) =>
+                          setShippingData({ ...shippingData, city: value })
+                        }
+                      >
+                        <SelectTrigger id="city" data-testid="select-city">
+                          <SelectValue placeholder="Pilih kota" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="jakarta-selatan">Jakarta Selatan</SelectItem>
+                          <SelectItem value="jakarta-pusat">Jakarta Pusat</SelectItem>
+                          <SelectItem value="bandung">Bandung</SelectItem>
+                          <SelectItem value="surabaya">Surabaya</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="postalCode">Kode Pos <span className="text-destructive">*</span></Label>
+                      <Input
+                        id="postalCode"
+                        value={shippingData.postalCode}
+                        onChange={(e) =>
+                          setShippingData({ ...shippingData, postalCode: e.target.value })
+                        }
+                        placeholder="12345"
+                        data-testid="input-postal-code"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
