@@ -1,0 +1,101 @@
+I am a UI/UX developer for E-Commerce websites. I created an e-commerce project called **"Safety Store"** for a client. This website will be used in **Indonesia** and marketed to **Indonesian users**.
+Your task is to **enhance** this project according to the following requirements:
+
+## Required Enhancements
+
+1. **Correct Color Contrast**
+   Ensure color contrast meets accessibility guidelines so text and UI elements are readable for all users (including low-vision and color-impaired users).
+
+2. **Semantic HTML & Alt Text**
+   Use correct semantic HTML elements (for example, `<nav>`, `<header>`, `<main>`, `<section>`, `<button>`, `<form>`, etc.) and provide meaningful `alt` attributes for all images so screen readers can describe them.
+
+3. **Cross-Browser & Cross-Device Compatibility**
+   The site must display and function correctly on **Chrome, Firefox, Safari, and Edge** and must work smoothly on **iPhone, Android phones, and tablets**.
+
+4. **Compact & Simple Page Layouts**
+   Use clean, minimal layouts that prioritize clarity and reduce visual noise.
+
+5. **Moderate Bundle Size**
+   Keep file sizes for HTML, CSS, and JavaScript (Next.js, Tailwind CSS, Framer Motion, Zustand) at a **moderate** level — not overly large, yet not under-optimized — to balance features and performance.
+
+6. **Beginner → Intermediate Level Complexity**
+   The overall site architecture and features should be at a **beginner–intermediate** level (not expert/advanced). Implement pragmatic solutions that are robust but not overly complex.
+
+7. **Maintainability & Debuggability**
+   Make the codebase easy to maintain and debug by developers at the beginner–intermediate level: clear structure, consistent naming, modular components, and good comments/documentation.
+
+8. **Web Performance (Speed)**
+   Prioritize fast load times and responsive interactions (e.g., code splitting, lazy loading, minimizing render-blocking resources).
+
+9. **Image Optimization**
+   Provide guidance and examples for compressing images and using modern formats (WebP, AVIF) to reduce size while keeping acceptable visual quality.
+
+10. **Caching Strategy**
+    Recommend caching techniques to speed up repeat visits (browser caching, CDN caching, cache headers, and incremental/static rendering where applicable).
+
+11. **Keyboard Navigation**
+    Ensure users can navigate the entire site using only the keyboard (logical `tabindex`, visible focus styles, skip links, ARIA roles where needed).
+
+12. **Accessibility (A11y)**
+    Accessibility is non-negotiable. Implement A11y best practices (semantic markup, ARIA where necessary, accessible forms, focus management, labels, error messages). Note: in many jurisdictions accessibility is also a legal requirement.
+
+13. **Simplified Checkout Flow**
+    Streamline checkout: guest checkout option, clear steps, immediate validation feedback, and minimal friction (fewer fields; progressive disclosure where appropriate).
+
+14. **Page Content Optimization**
+    Optimize page content for clarity and conversion: clear product titles, pricing (show discounts explicitly), concise bullet descriptions, trust signals, and prioritized CTAs.
+
+15. **Responsive Theme**
+    Use a responsive design system so the UI adapts fluidly to different screen sizes and orientations.
+
+16. **Touchable Targets**
+    Ensure touch targets (buttons, links) meet recommended minimum sizes and spacing so they are easy to tap on mobile.
+
+17. **Simplified Mobile Navigation & Checkout**
+    On mobile, simplify navigation and the checkout process: single-column flows, prominent search, large CTAs, minimize input typing.
+
+## Principles
+
+* **Mobile First** — Most traffic comes from mobile. Design and development must prioritize mobile experiences.
+* **Visuals are Essential** — Users cannot touch products online, so visuals (high-quality images, multiple angles, video) are critical.
+
+## Best Practices (Product Presentation)
+
+* Use high-resolution images from multiple angles and product videos where possible.
+* Display price clearly and show discounts prominently.
+* Provide detailed, persuasive product descriptions.
+
+## (II) User Experience & Conversion Optimization
+
+Technology is a tool; the goal is to make buying easy.
+
+### Simple Navigation
+
+* **Principle:** Users should find what they want within **3 clicks**.
+* **Best practices:** Clear menu structure (mega menu when appropriate), breadcrumbs, logical categories.
+
+### Strong Search & Filtering
+
+* **Principle:** Intent-driven shoppers use search.
+* **Best practices:** Prominent search box with autocomplete suggestions and spell correction.
+* Implement faceted search to filter by attributes (price, color, size). (If using an e-commerce engine/module, use open-source solutions that support faceted search.)
+
+## Constraints & Additional Requirements
+
+* Keep the enhancement level at **beginner–intermediate** so it is maintainable by a developer like me and usable by non-technical users.
+* Prefer **open-source** tools and free solutions wherever possible (no paid services required).
+* The enhancements should make the site **ready for real users**, **ready to publish**, and **ready to maintain**.
+
+## Language & Documentation
+
+* All code comments, inline documentation, and any developer-facing textual instructions **must be written in clear, specific, and detailed Indonesian** (Bahasa Indonesia).
+
+## Scope of My Task (Assistant)
+
+* Your task is to **focus only on improving the UI/UX** and ensuring features and functionality are usable and well-implemented.
+
+## Research File
+
+* I will also provide an `E-commerce UI_UX Design Research.txt` file containing prior design research. Study that research and apply whatever parts are applicable. If an item from the research cannot be applied, ignore it and focus on what can be implemented given the requirements and context.
+
+---
