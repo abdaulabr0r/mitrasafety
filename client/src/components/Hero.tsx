@@ -11,35 +11,37 @@ export default function Hero({ onShopNowClick }: HeroProps) {
   return (
     <section 
       className="relative min-h-[60vh] md:min-h-[70vh] overflow-hidden" 
-      aria-label="Banner promosi utama"
+      aria-labelledby="hero-title"
     >
       {/* 
-        Gambar latar belakang hero dengan optimasi - Hero background image with optimization
+        Gunakan elemen <img> untuk gambar hero demi aksesibilitas yang lebih baik.
+        Ini memastikan pembaca layar dapat mengidentifikasi dan mengumumkan alt text gambar.
+        Gunakan loading="eager" karena ini adalah gambar Largest Contentful Paint (LCP).
         
-        Optimasi yang diterapkan - Applied optimizations:
-        - Background image menggunakan import static untuk optimasi Vite
-        - Vite secara otomatis mengoptimalkan gambar yang diimport
-        - Gradient overlay memastikan teks tetap terbaca di berbagai tema
-        
-        Untuk gambar hero baru - For new hero images:
-        - Gunakan format WebP dengan ukuran file optimal (maksimal 200KB)
-        - Pertimbangkan menggunakan gambar dengan resolusi 1920x1080 atau 2560x1440
-        - Use WebP format with optimal file size (max 200KB)
-        - Consider using 1920x1080 or 2560x1440 resolution
+        Use an <img> element for the hero image for better accessibility.
+        This ensures screen readers can identify and announce the image's alt text.
+        Use loading="eager" as this is likely the Largest Contentful Paint (LCP) image.
       */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroImage})` }}
-        role="img"
-        aria-label="Pekerja Indonesia dengan perlengkapan keselamatan"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40" aria-hidden="true" />
-      </div>
+      <img
+        src={heroImage}
+        alt="Seorang pekerja konstruksi Indonesia mengenakan helm keselamatan dan rompi visibilitas tinggi, berdiri dengan latar belakang lokasi konstruksi."
+        className="absolute inset-0 w-full h-full object-cover"
+        loading="eager"
+        width={1920}
+        height={1080}
+      />
+
+      {/* Overlay gradien untuk memastikan keterbacaan teks - Gradient overlay to ensure text readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40" aria-hidden="true" />
 
       <div className="relative container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-2xl text-white">
-          {/* Judul utama hero - Main hero title */}
-          <motion.h2 
+          {/*
+            Gunakan <h1> untuk judul utama halaman untuk struktur semantik yang benar.
+            Use <h1> for the main page title for correct semantic structure.
+          */}
+          <motion.h1
+            id="hero-title"
             className="text-3xl md:text-5xl font-bold mb-4 leading-tight" 
             data-testid="text-hero-title"
             initial={{ opacity: 0, y: 30 }}
@@ -47,8 +49,7 @@ export default function Hero({ onShopNowClick }: HeroProps) {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             Perlengkapan Keselamatan Kerja Terlengkap
-          </motion.h2>
-          {/* Deskripsi hero - Hero description */}
+          </motion.h1>
           <motion.p 
             className="text-lg md:text-xl mb-8 text-white/90" 
             data-testid="text-hero-subtitle"

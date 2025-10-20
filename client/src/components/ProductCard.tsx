@@ -55,39 +55,30 @@ export default function ProductCard({
 
   return (
     <AnimatedCard>
-      {/* Kartu produk - Product card */}
-      <Card 
-        className="overflow-hidden hover-elevate transition-shadow" 
+      {/*
+        Gunakan elemen <article> untuk setiap kartu produk. Ini secara semantik
+        mengidentifikasi setiap kartu sebagai konten mandiri yang dapat didistribusikan.
+        Use <article> for each product card. This semantically identifies each card
+        as a self-contained, distributable piece of content.
+      */}
+      <Card
+        className="overflow-hidden hover-elevate transition-shadow flex flex-col h-full"
         data-testid={`card-product-${id}`}
         role="article"
-        aria-label={`Produk ${name}`}
+        aria-labelledby={`product-name-${id}`}
       >
-        <div 
-          className="relative cursor-pointer" 
+        {/*
+          Bungkus gambar dan nama produk dalam satu tombol untuk menyederhanakan interaksi.
+          Ini menciptakan satu target klik yang jelas untuk navigasi ke detail produk.
+          Wrap the product image and name in a single button to simplify interaction.
+          This creates a clear, single click target for navigating to product details.
+        */}
+        <button
+          type="button"
           onClick={onClick}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              onClick?.();
-            }
-          }}
-          aria-label={`Lihat detail ${name}`}
+          className="relative text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-t-md"
+          aria-label={`Lihat detail untuk ${name}`}
         >
-          {/* 
-            Gambar produk dengan optimasi performa - Product image with performance optimization
-            
-            Optimasi yang diterapkan - Applied optimizations:
-            - loading="lazy": Lazy loading untuk menghemat bandwidth dan mempercepat initial load
-            - width & height: Mencegah Cumulative Layout Shift (CLS) saat gambar dimuat
-            - aspect-square: Menjaga rasio aspek 1:1 untuk konsistensi tampilan
-            
-            Untuk gambar produk baru - For new product images:
-            - Gunakan format WebP untuk ukuran file lebih kecil (30-50% lebih kecil dari PNG)
-            - Gunakan fallback PNG untuk kompatibilitas browser lama
-            - Contoh: <picture><source srcset="image.webp" type="image/webp"><img src="image.png"></picture>
-          */}
           <div className="aspect-square overflow-hidden bg-muted">
             <motion.img
               src={imageUrl}
@@ -101,14 +92,13 @@ export default function ProductCard({
               transition={{ duration: 0.3 }}
             />
           </div>
-          {/* Badge dan indikator - Badges and indicators */}
           {badge && (
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <Badge className="absolute left-2 top-2" data-testid="badge-product" aria-label={`Label produk: ${badge}`}>
+              <Badge className="absolute left-2 top-2" data-testid="badge-product" aria-hidden="true">
                 {badge}
               </Badge>
             </motion.div>
@@ -119,7 +109,7 @@ export default function ProductCard({
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}
             >
-              <Badge variant="destructive" className="absolute right-2 top-2" data-testid="badge-discount" aria-label={`Diskon ${discount} persen`}>
+              <Badge variant="destructive" className="absolute right-2 top-2" data-testid="badge-discount" aria-hidden="true">
                 -{discount}%
               </Badge>
             </motion.div>
@@ -129,64 +119,68 @@ export default function ProductCard({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="absolute inset-0 flex items-center justify-center bg-black/50"
-              aria-live="polite"
             >
-              <Badge variant="secondary" data-testid="badge-out-of-stock" aria-label="Produk habis stok">
+              <Badge variant="secondary" data-testid="badge-out-of-stock" aria-hidden="true">
                 Stok Habis
               </Badge>
             </motion.div>
           )}
-        </div>
+        </button>
 
-        {/* Informasi produk - Product information */}
-        <div className="p-4">
+        <div className="p-4 flex flex-col flex-grow">
           <h3
-            className="mb-2 line-clamp-2 font-semibold text-foreground cursor-pointer"
-            onClick={onClick}
+            id={`product-name-${id}`}
+            className="mb-2 line-clamp-2 font-semibold text-foreground"
             data-testid="text-product-name"
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
+          >
+            {/*
+              Buat judul produk sebagai tautan untuk aksesibilitas dan SEO yang lebih baik.
+              Ini memberikan cara navigasi alternatif bagi pengguna pembaca layar.
+              Make the product title a link for better accessibility and SEO.
+              This provides an alternative way for screen reader users to navigate.
+            */}
+            <a
+              href="#"
+              onClick={(e) => {
                 e.preventDefault();
                 onClick?.();
-              }
-            }}
-          >
-            {name}
+              }}
+              className="hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+            >
+              {name}
+            </a>
           </h3>
 
-          {/* Harga produk - Product pricing */}
-          <div className="mb-3 flex items-baseline gap-2" aria-label={`Harga produk ${formatPrice(price)}${originalPrice ? `, harga asli ${formatPrice(originalPrice)}` : ''}`}>
-            <span className="text-lg font-bold text-foreground" data-testid="text-product-price">
-              {formatPrice(price)}
-            </span>
-            {originalPrice && (
-              <span className="text-sm text-muted-foreground line-through" data-testid="text-original-price" aria-label="Harga sebelum diskon">
-                {formatPrice(originalPrice)}
+          <div className="mt-auto">
+            <div className="mb-3 flex items-baseline gap-2" aria-label={`Harga: ${formatPrice(price)}`}>
+              <span className="text-lg font-bold text-foreground" data-testid="text-product-price">
+                {formatPrice(price)}
               </span>
-            )}
-          </div>
-
-          {/* Tombol tambah ke keranjang - Add to cart button */}
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Button
-              className="w-full gap-2"
-              onClick={(e) => {
-                e.stopPropagation();
-                onAddToCart?.(id);
-              }}
-              disabled={!inStock}
-              data-testid="button-add-to-cart"
-              aria-label={inStock ? `Tambah ${name} ke keranjang` : `${name} habis stok`}
+              {originalPrice && (
+                <span className="text-sm text-muted-foreground line-through" data-testid="text-original-price" aria-label="Harga asli">
+                  {formatPrice(originalPrice)}
+                </span>
+              )}
+            </div>
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <ShoppingCart className="h-4 w-4" aria-hidden="true" />
-              {inStock ? "Tambah ke Keranjang" : "Stok Habis"}
-            </Button>
-          </motion.div>
+              <Button
+                className="w-full gap-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAddToCart?.(id);
+                }}
+                disabled={!inStock}
+                data-testid="button-add-to-cart"
+                aria-label={inStock ? `Tambah ${name} ke keranjang` : `${name} saat ini tidak tersedia`}
+              >
+                <ShoppingCart className="h-4 w-4" aria-hidden="true" />
+                {inStock ? "Tambah ke Keranjang" : "Stok Habis"}
+              </Button>
+            </motion.div>
+          </div>
         </div>
       </Card>
     </AnimatedCard>
