@@ -16,16 +16,45 @@
 
 ---
 
+## 🚀 Panduan Cepat untuk Developer (Quick Start Guide)
+
+Berikut adalah langkah-langkah utama yang harus diikuti setiap kali menambahkan gambar baru ke dalam proyek.
+
+1.  **Siapkan Gambar Sumber**:
+    *   **Resolusi**: Minimal `800x800px` untuk produk, `1920x1080px` untuk hero.
+    *   **Aspek Rasio**: `1:1` (persegi) untuk produk, `16:9` untuk hero.
+    *   **Format**: Gunakan `PNG` atau `JPEG` berkualitas tinggi sebagai sumber.
+
+2.  **Konversi ke WebP**:
+    *   Gunakan [Squoosh.app](https://squoosh.app/) untuk mengonversi gambar ke format `WebP`.
+    *   **Setting Kualitas**: `85` untuk gambar produk, `80` untuk gambar hero.
+    *   Tujuannya adalah ukuran file di bawah `100KB` untuk produk dan `200KB` untuk hero.
+
+3.  **Simpan Kedua File**:
+    *   Simpan kedua versi gambar (`.webp` dan `.png` asli sebagai fallback) di folder `attached_assets/generated_images/`.
+    *   Gunakan nama file yang deskriptif, contoh: `helm-safety-kuning-depan.webp`.
+
+4.  **Implementasikan dengan `<picture>`**:
+    *   Gunakan elemen `<picture>` di dalam kode React Anda untuk memastikan browser modern memuat WebP, sementara browser lama memuat PNG.
+    *   Lihat [contoh implementasi teknis](#implementasi-teknis) di bawah untuk kode yang bisa di-copy-paste.
+
+5.  **Tambahkan Atribut Penting**:
+    *   `alt`: Tulis deskripsi yang jelas dalam Bahasa Indonesia.
+    *   `width` & `height`: Sesuaikan dengan ukuran gambar untuk mencegah CLS.
+    *   `loading="lazy"`: Gunakan untuk semua gambar di bawah "the fold" (semua gambar produk di grid).
+
+---
+
 ## 🎯 Ringkasan
 
 Optimasi gambar adalah aspek krusial untuk performa web, terutama untuk pengguna di Indonesia yang sering mengakses dengan koneksi mobile. Panduan ini menjelaskan strategi optimasi gambar yang telah diterapkan dan cara mengoptimalkan gambar baru.
 
 **Manfaat Optimasi Gambar:**
-- ⚡ Waktu loading halaman lebih cepat (30-50% lebih cepat)
-- 💾 Penggunaan data lebih hemat (hingga 50% lebih kecil)
-- 📱 Pengalaman mobile yang lebih baik
-- 🎨 Tidak ada layout shift (CLS = 0)
-- ♿ Aksesibilitas yang lebih baik
+- ⚡ **Waktu Muat Cepat**: Halaman bisa 30-50% lebih cepat.
+- 💾 **Hemat Kuota**: Ukuran file gambar bisa 50% lebih kecil.
+- 📱 **Pengalaman Mobile Unggul**: Sangat penting untuk pengguna di Indonesia.
+- 🎨 **Layout Stabil**: Mencegah Cumulative Layout Shift (CLS) untuk skor Web Vitals yang baik.
+- ♿ **Aksesibilitas Terjamin**: Alt text yang deskriptif membantu pengguna dengan pembaca layar.
 
 ---
 
@@ -172,6 +201,56 @@ import productImage from "@assets/generated_images/product-name.webp";
   className="h-full w-full object-cover"
 />
 ```
+
+**Contoh Copy-Paste Siap Pakai untuk Komponen Produk**
+
+Berikut adalah contoh lengkap yang bisa langsung diadaptasi ke dalam komponen `ProductCard.tsx` atau sejenisnya.
+
+1.  **Impor Gambar**:
+    *   Pastikan kedua file (`.webp` dan `.png`) ada di folder `attached_assets/generated_images/`.
+
+    ```tsx
+    // Di bagian atas file komponen Anda
+    import helmSafetyWebP from "@assets/generated_images/helm-safety-kuning.webp";
+    import helmSafetyPng from "@assets/generated_images/helm-safety-kuning.png";
+    ```
+
+2.  **Gunakan di dalam JSX**:
+    *   Gantilah elemen `<img>` yang ada dengan blok `<picture>` ini.
+
+    ```tsx
+    // Di dalam return statement dari komponen Anda, gantikan <img> yang ada
+
+    <div className="aspect-square overflow-hidden bg-muted">
+      <picture>
+        {/*
+          Browser akan mencoba memuat sumber pertama (WebP). Jika tidak didukung,
+          ia akan beralih ke sumber berikutnya. 'type="image/webp"' sangat penting.
+          The browser will try to load the first source (WebP). If not supported,
+          it will fall back to the next. 'type="image/webp"' is crucial.
+        */}
+        <source srcSet={helmSafetyWebP} type="image/webp" />
+
+        {/*
+          Elemen <img> ini adalah fallback utama dan juga tempat atribut penting
+          seperti alt, width, height, dan loading diletakkan.
+          This <img> element is the ultimate fallback and also where key attributes
+          like alt, width, height, and loading are placed.
+        */}
+        <motion.img
+          src={helmSafetyPng}
+          alt="Helm safety berwarna kuning cerah, tampak dari depan, siap melindungi kepala di lokasi kerja."
+          className="h-full w-full object-cover"
+          loading="lazy"
+          width={400}
+          height={400}
+          data-testid="img-product"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+        />
+      </picture>
+    </div>
+    ```
 
 #### 5. **Responsive Images dengan srcset**
 

@@ -81,7 +81,7 @@ span[role="img"] {
 
   --accent-foreground: 220 13% 13%;
 
-  --destructive: 0 84% 42%;
+  --destructive: 0 84% 40%;
 
   --destructive-foreground: 0 0% 100%;
 
@@ -197,7 +197,7 @@ span[role="img"] {
 
   --muted: 210 12% 17%;
 
-  --muted-foreground: 220 9% 65%;
+  --muted-foreground: 220 9% 75%;
 
   --accent: 210 15% 18%;
 
