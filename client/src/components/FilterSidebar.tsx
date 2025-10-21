@@ -32,7 +32,7 @@ const categories = [
 const protectionGroups = [
   {
     id: "impact",
-    label: "Perlindungan Impact & Kompresi",
+    label: "Perlindungan Benturan & Kompresi",
     options: [
       { value: "impact:steel-toe", label: "Steel Toe (S3)" },
       { value: "impact:composite-shell", label: "Cangkang Komposit" },
@@ -41,19 +41,19 @@ const protectionGroups = [
   },
   {
     id: "electrical",
-    label: "Perlindungan Listrik & Anti-Statik",
+    label: "Perlindungan Listrik & Anti-Statis",
     options: [
       { value: "electrical:class-e", label: "Helm Class E" },
-      { value: "electrical:eh", label: "Sepatu EH Certified" },
+      { value: "electrical:eh", label: "Sepatu Bersertifikat EH" },
     ],
   },
   {
     id: "visibility",
-    label: "Visibilitas & Lingkungan",
+    label: "Visibilitas & Lingkungan Kerja",
     options: [
       { value: "visibility:hi-vis-class2", label: "Hi-Vis Class 2" },
-      { value: "surface:slip-resistant", label: "Sol Anti-Slip" },
-      { value: "vision:anti-fog", label: "Anti-Fog Lens" },
+      { value: "surface:slip-resistant", label: "Sol Anti-Selip" },
+      { value: "vision:anti-fog", label: "Lensa Anti-Kabut" },
     ],
   },
   {
@@ -61,8 +61,8 @@ const protectionGroups = [
     label: "Perlindungan Pernapasan & Tangan",
     options: [
       { value: "respiratory:n95", label: "Respirator N95" },
-      { value: "hand:cut-level-a3", label: "Cut Level A3" },
-      { value: "surface:grip-support", label: "Grip Anti-Oli" },
+      { value: "hand:cut-level-a3", label: "Tahan Goresan Level A3" },
+      { value: "surface:grip-support", label: "Cengkeraman Anti-Oli" },
     ],
   },
 ];
@@ -70,7 +70,7 @@ const protectionGroups = [
 const standardGroups = [
   {
     id: "impact-standards",
-    label: "Standar Impact & Kompresi",
+    label: "Standar Benturan & Kompresi",
     options: [
       { value: "SNI 1811:2007", label: "SNI 1811:2007" },
       { value: "EN ISO 20345 S3", label: "EN ISO 20345 S3" },
@@ -79,7 +79,7 @@ const standardGroups = [
   },
   {
     id: "electrical-standards",
-    label: "Standar Listrik & Anti-Statik",
+    label: "Standar Listrik & Anti-Statis",
     options: [
       { value: "ASTM F2413 EH", label: "ASTM F2413 EH" },
       { value: "NIOSH N95", label: "NIOSH N95" },
@@ -87,7 +87,7 @@ const standardGroups = [
   },
   {
     id: "optics-standards",
-    label: "Standar Optik & Visibilitas",
+    label: "Standar Pelindung Mata & Visibilitas",
     options: [
       { value: "EN 166:2001", label: "EN 166:2001" },
       { value: "ISO 20471 Class 2", label: "ISO 20471 Class 2" },
@@ -95,7 +95,7 @@ const standardGroups = [
   },
   {
     id: "hand-standards",
-    label: "Standar Proteksi Tangan",
+    label: "Standar Pelindung Tangan",
     options: [
       { value: "ANSI/ISEA 105 A3", label: "ANSI/ISEA 105 A3" },
     ],
@@ -105,35 +105,35 @@ const standardGroups = [
 const hazardGroups = [
   {
     id: "impact-hazards",
-    label: "Risiko Impact & Kompresi",
+    label: "Risiko Benturan & Kompresi",
     options: [
-      { value: "Impact Hazard", label: "Impact Hazard" },
-      { value: "Head Impact", label: "Head Impact" },
+      { value: "Impact Hazard", label: "Bahaya Benturan" },
+      { value: "Head Impact", label: "Benturan Kepala" },
     ],
   },
   {
     id: "electrical-hazards",
     label: "Risiko Kelistrikan",
     options: [
-      { value: "Electrical Hazard", label: "Electrical Hazard" },
+      { value: "Electrical Hazard", label: "Bahaya Listrik" },
     ],
   },
   {
     id: "surface-hazards",
     label: "Risiko Permukaan Kerja",
     options: [
-      { value: "Oil & Slip Hazard", label: "Oil & Slip Hazard" },
-      { value: "Roadway Work Zone", label: "Roadway Work Zone" },
+      { value: "Oil & Slip Hazard", label: "Bahaya Oli & Licin" },
+      { value: "Roadway Work Zone", label: "Zona Kerja Jalan Raya" },
     ],
   },
   {
     id: "environment-hazards",
-    label: "Risiko Lingkungan",
+    label: "Risiko Lingkungan Kerja",
     options: [
-      { value: "Dust & Debris", label: "Dust & Debris" },
-      { value: "UV Exposure", label: "UV Exposure" },
-      { value: "Dust & Particulate", label: "Dust & Particulate" },
-      { value: "Abrasion Hazard", label: "Abrasion Hazard" },
+      { value: "Dust & Debris", label: "Debu & Serpihan" },
+      { value: "UV Exposure", label: "Paparan Sinar UV" },
+      { value: "Dust & Particulate", label: "Debu & Partikel" },
+      { value: "Abrasion Hazard", label: "Bahaya Gesekan" },
     ],
   },
 ];
@@ -249,7 +249,7 @@ export default function FilterSidebar({
             aria-label="Tampilkan hanya produk dengan stok tersedia"
           />
           <Label htmlFor="in-stock" className="text-sm font-normal cursor-pointer">
-            Stok tersedia
+            Hanya tampilkan produk dengan stok tersedia
           </Label>
         </div>
       </fieldset>

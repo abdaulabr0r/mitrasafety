@@ -169,7 +169,7 @@ export default function CheckoutModal({
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email (Opsional)</Label>
+                      <Label htmlFor="email">Alamat Email (Opsional)</Label>
                       <Input
                         id="email"
                         type="email"
@@ -177,7 +177,7 @@ export default function CheckoutModal({
                         onChange={(e) =>
                           setShippingData({ ...shippingData, email: e.target.value })
                         }
-                        placeholder="Untuk notifikasi pesanan"
+                        placeholder="Untuk menerima notifikasi pesanan"
                         data-testid="input-email"
                       />
                     </div>
@@ -242,7 +242,7 @@ export default function CheckoutModal({
                         onChange={(e) =>
                           setShippingData({ ...shippingData, postalCode: e.target.value })
                         }
-                        placeholder="12345"
+                        placeholder="Contoh: 12345"
                         data-testid="input-postal-code"
                       />
                     </div>
@@ -285,7 +285,7 @@ export default function CheckoutModal({
                     <div className="flex-1 cursor-pointer">
                       <div className="font-semibold">COD (Bayar di Tempat)</div>
                       <div className="text-sm text-muted-foreground">
-                        Siapkan uang tunai saat kurir tiba
+                        Bayar tunai saat pesanan diterima
                       </div>
                     </div>
                   </Label>
@@ -349,12 +349,12 @@ export default function CheckoutModal({
           </Button>
           {step < 2 ? (
             <Button onClick={handleNext} data-testid="button-next">
-              Lanjut ke Konfirmasi
+              Lanjutkan ke Konfirmasi
               <ChevronRight className="h-4 w-4 ml-1" aria-hidden="true" />
             </Button>
           ) : (
             <Button onClick={handleComplete} data-testid="button-complete-order">
-              Selesaikan Pesanan
+              Selesaikan Pemesanan
             </Button>
           )}
         </div>

@@ -132,7 +132,7 @@ export default function Header({ cartItemCount = 0, onCartClick, onSearch, onCat
               <Input
                 ref={searchInputRef}
                 type="search"
-                placeholder="Cari produk keselamatan... (tekan / atau s)"
+                placeholder="Cari produk keselamatan kerja... (tekan / atau s)"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10"
@@ -206,7 +206,7 @@ export default function Header({ cartItemCount = 0, onCartClick, onSearch, onCat
             <Input
               ref={mobileSearchInputRef}
               type="search"
-              placeholder="Cari produk... (tekan / atau s)"
+              placeholder="Cari produk keselamatan... (tekan / atau s)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10"

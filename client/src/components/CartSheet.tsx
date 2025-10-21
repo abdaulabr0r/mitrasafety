@@ -154,7 +154,7 @@ export default function CartSheet({
                 </div>
                 {subtotal < 500000 && (
                   <p className="text-xs text-muted-foreground" role="status" aria-live="polite">
-                    Belanja {formatPrice(500000 - subtotal)} lagi untuk gratis ongkir!
+                    Tambahkan belanja senilai {formatPrice(500000 - subtotal)} lagi untuk mendapatkan gratis ongkir!
                   </p>
                 )}
                 <div className="flex justify-between border-t pt-2 text-base font-bold">

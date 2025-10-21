@@ -55,13 +55,13 @@ export default function ProductDetailModal({
     "impact:composite-shell": "Cangkang Komposit",
     "puncture:kevlar-midsole": "Midsole Kevlar",
     "electrical:class-e": "Helm Class E",
-    "electrical:eh": "EH Rated",
+    "electrical:eh": "Bersertifikat EH",
     "visibility:hi-vis-class2": "Hi-Vis Class 2",
-    "surface:slip-resistant": "Sol Anti-Slip",
-    "vision:anti-fog": "Anti-Fog Lens",
+    "surface:slip-resistant": "Sol Anti-Selip",
+    "vision:anti-fog": "Lensa Anti-Kabut",
     "respiratory:n95": "Respirator N95",
-    "hand:cut-level-a3": "Cut Level A3",
-    "surface:grip-support": "Grip Anti-Oli",
+    "hand:cut-level-a3": "Tahan Goresan A3",
+    "surface:grip-support": "Cengkeraman Anti-Oli",
   };
 
   // Alt text deskriptif untuk gambar produk detail - Descriptive alt text for product detail images

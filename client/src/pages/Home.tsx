@@ -118,7 +118,7 @@ export default function Home() {
     }, quantity);
 
     toast({
-      title: "Ditambahkan ke keranjang",
+      title: "Berhasil ditambahkan ke keranjang",
       description: product.name,
     });
   };
@@ -202,23 +202,23 @@ export default function Home() {
   const corporateHighlights = [
     {
       icon: Building2,
-      title: "Dashboard Procurement",
-      description: "Pantau kuota subsidi karyawan, status pesanan, dan inventaris secara real-time.",
+      title: "Dashboard Pengadaan",
+      description: "Pantau kuota subsidi karyawan, status pesanan, dan inventaris secara waktu nyata (real-time).",
     },
     {
       icon: ClipboardList,
-      title: "Approval Bertingkat",
-      description: "Dukung alur persetujuan multi-level dengan jejak audit lengkap untuk tim Anda.",
+      title: "Persetujuan Bertingkat",
+      description: "Mendukung alur persetujuan multi-level dengan jejak audit yang lengkap untuk tim Anda.",
     },
     {
       icon: Factory,
       title: "Integrasi Inventaris",
-      description: "Sinkronkan stok gudang melalui API atau unggahan CSV terjadwal setiap hari.",
+      description: "Sinkronkan stok gudang melalui API atau unggahan CSV yang terjadwal setiap hari.",
     },
     {
       icon: Users,
       title: "Manajemen Subsidi",
-      description: "Tetapkan plafon pembelian per karyawan dan validasi otomatis saat checkout.",
+      description: "Tetapkan batas pembelian per karyawan dan validasi otomatis saat proses checkout.",
     },
   ];
 
@@ -246,7 +246,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-3">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-muted-foreground">
-              Sesuaikan pengalaman Mitra Safety untuk belanja retail atau kebutuhan korporat.
+              Pilih pengalaman belanja yang sesuai dengan kebutuhan Anda, baik untuk pembelian retail maupun korporat.
             </p>
             <div
               className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3"
@@ -296,7 +296,7 @@ export default function Home() {
                 Kategori Produk
               </h2>
               <p className="text-sm text-muted-foreground max-w-lg">
-                Pilih kategori untuk langsung menelusuri perlengkapan keselamatan sesuai kebutuhan Anda.
+                Pilih kategori untuk menelusuri berbagai perlengkapan keselamatan kerja yang sesuai dengan kebutuhan Anda.
               </p>
             </div>
             {categoriesLoading ? (
@@ -332,7 +332,7 @@ export default function Home() {
                     data-testid="button-clear-all-filters"
                     aria-label="Hapus semua filter produk"
                   >
-                    Hapus Filter
+                    Hapus Semua Filter
                   </Button>
                 )}
                 <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
@@ -392,10 +392,10 @@ export default function Home() {
                 ) : filteredProducts.length === 0 ? (
                   <div className="flex flex-col items-center justify-center rounded-lg border bg-card/60 p-12 text-center" role="status">
                     <p className="mb-4 text-lg text-muted-foreground">
-                      Tidak ada produk yang sesuai dengan filter Anda
+                      Maaf, tidak ada produk yang sesuai dengan kriteria pencarian Anda.
                     </p>
                     <Button onClick={handleClearFilters} variant="outline" aria-label="Hapus semua filter untuk melihat produk">
-                      Hapus Filter
+                      Hapus Semua Filter
                     </Button>
                   </div>
                 ) : (
@@ -431,22 +431,22 @@ export default function Home() {
                 Mengapa Memilih Mitra Safety?
               </h2>
               <p className="mx-auto mb-8 max-w-2xl text-muted-foreground">
-                Kami berkomitmen menyediakan perlengkapan keselamatan kerja berkualitas tinggi
-                dengan harga terjangkau untuk melindungi pekerja Indonesia.
+                Kami berkomitmen untuk menyediakan perlengkapan keselamatan kerja berkualitas tinggi
+                dengan harga terjangkau demi melindungi para pekerja di seluruh Indonesia.
               </p>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list" aria-label="Keunggulan Mitra Safety">
                 <article className="rounded-md border bg-background p-6 text-left">
                   <div className="mb-3 text-4xl" role="img" aria-label="Ikon checklist">✓</div>
                   <h3 className="mb-2 font-semibold text-foreground">Produk Berstandar SNI</h3>
                   <p className="text-sm text-muted-foreground">
-                    Semua produk telah tersertifikasi dan memenuhi standar keselamatan nasional
+                    Semua produk telah tersertifikasi dan memenuhi standar keselamatan kerja nasional
                   </p>
                 </article>
                 <article className="rounded-md border bg-background p-6 text-left">
                   <div className="mb-3 text-4xl" role="img" aria-label="Ikon truk pengiriman">🚚</div>
                   <h3 className="mb-2 font-semibold text-foreground">Pengiriman Cepat</h3>
                   <p className="text-sm text-muted-foreground">
-                    Gratis ongkir untuk pembelian minimal Rp 500.000 ke seluruh Indonesia
+                    Gratis ongkos kirim untuk pembelian minimal Rp500.000 ke seluruh Indonesia
                   </p>
                 </article>
                 <article className="rounded-md border bg-background p-6 text-left">
@@ -477,7 +477,7 @@ export default function Home() {
                 Procurement Safety Gear Tanpa Rumit
               </h2>
               <p className="mt-4 text-base text-muted-foreground">
-                Automasi seluruh proses pengadaan dengan dashboard terpusat, dari manajemen subsidi hingga integrasi inventaris.
+                Otomatisasi seluruh proses pengadaan dengan dashboard terpusat, mulai dari manajemen subsidi hingga integrasi inventaris.
               </p>
             </div>
 
@@ -490,7 +490,7 @@ export default function Home() {
                       <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
                     </span>
                     <h3 className="text-lg font-semibold text-foreground">{highlight.title}</h3>
-                    <p className="text-sm text-muted-foreground">{highlight.description}</p>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{highlight.description}</p>
                   </article>
                 );
               })}
@@ -542,8 +542,8 @@ export default function Home() {
           setCheckoutOpen(false);
           clearCart();
           toast({
-            title: "Pesanan Berhasil!",
-            description: "Terima kasih telah berbelanja di Mitra Safety Indonesia.",
+            title: "Pesanan Berhasil Dibuat!",
+            description: "Terima kasih telah berbelanja di Mitra Safety Indonesia. Kami akan segera memproses pesanan Anda.",
           });
         }}
       />

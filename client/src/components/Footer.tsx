@@ -13,7 +13,7 @@ export default function Footer() {
               <h3 className="text-lg font-bold text-foreground">Mitra Safety</h3>
             </div>
             <p className="text-sm text-muted-foreground mb-4">
-              Penyedia perlengkapan keselamatan kerja terpercaya di Indonesia sejak 2015.
+              Penyedia terpercaya perlengkapan keselamatan kerja berkualitas di Indonesia sejak tahun 2015.
             </p>
             {/* Alamat kontak - Contact address */}
             <address className="space-y-2 text-sm not-italic">
@@ -73,7 +73,7 @@ export default function Footer() {
             <div className="mt-6">
               <h5 className="mb-3 text-sm font-semibold text-foreground">Metode Pembayaran</h5>
               <p className="text-xs text-muted-foreground">
-                Transfer Bank, E-wallet (GoPay, OVO, Dana), COD
+                Transfer Bank, E-wallet (GoPay, OVO, Dana), dan COD (Bayar di Tempat)
               </p>
             </div>
           </nav>

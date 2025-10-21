@@ -48,7 +48,7 @@ export default function Hero({ onShopNowClick }: HeroProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Perlengkapan Keselamatan Kerja Terlengkap
+            Perlengkapan Keselamatan Kerja Terlengkap untuk Anda
           </motion.h1>
           <motion.p 
             className="text-lg md:text-xl mb-8 text-white/90" 
@@ -57,7 +57,7 @@ export default function Hero({ onShopNowClick }: HeroProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Produk berkualitas tinggi dengan harga terjangkau. Dipercaya oleh 500+ perusahaan di Indonesia.
+            Produk berkualitas tinggi dengan harga terjangkau. Telah dipercaya oleh lebih dari 500 perusahaan di seluruh Indonesia.
           </motion.p>
           {/* Tombol aksi utama - Primary call to action button */}
           <motion.div
@@ -90,9 +90,9 @@ export default function Hero({ onShopNowClick }: HeroProps) {
             aria-label="Keunggulan toko kami"
           >
             {[
-              { icon: Shield, title: "Produk Berstandar", desc: "Sertifikat SNI & ISO" },
-              { icon: Truck, title: "Gratis Ongkir", desc: "Minimal pembelian 500rb" },
-              { icon: ShoppingBag, title: "Harga Grosir", desc: "Untuk pembelian banyak" }
+              { icon: Shield, title: "Produk Berstandar", desc: "Bersertifikat SNI & ISO" },
+              { icon: Truck, title: "Gratis Ongkir", desc: "Untuk pembelian di atas Rp500.000" },
+              { icon: ShoppingBag, title: "Harga Grosir", desc: "Tersedia untuk pembelian dalam jumlah besar" }
             ].map((item, index) => (
               <motion.li 
                 key={item.title}
