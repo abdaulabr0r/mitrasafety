@@ -15,6 +15,10 @@ interface ProductCardProps {
   badge?: string;
   onAddToCart?: (id: string) => void;
   onClick?: () => void;
+  protectionLevels?: string[];
+  complianceStandards?: string[];
+  hazardClasses?: string[];
+  optimizedMedia?: { format: string; sizeKB?: number; note?: string; url?: string }[];
 }
 
 export default function ProductCard({
@@ -27,6 +31,10 @@ export default function ProductCard({
   badge,
   onAddToCart,
   onClick,
+  protectionLevels = [],
+  complianceStandards = [],
+  hazardClasses = [],
+  optimizedMedia = [],
 }: ProductCardProps) {
   const formatPrice = (amount: number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -40,6 +48,59 @@ export default function ProductCard({
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
     : 0;
 
+  const protectionLabels: Record<string, string> = {
+    "impact:steel-toe": "Steel Toe",
+    "impact:composite-shell": "Cangkang Komposit",
+    "puncture:kevlar-midsole": "Midsole Kevlar",
+    "electrical:class-e": "Helm Class E",
+    "electrical:eh": "EH Rated",
+    "visibility:hi-vis-class2": "Hi-Vis Class 2",
+    "surface:slip-resistant": "Sol Anti-Slip",
+    "vision:anti-fog": "Anti-Fog Lens",
+    "respiratory:n95": "Respirator N95",
+    "hand:cut-level-a3": "Cut Level A3",
+    "surface:grip-support": "Grip Anti-Oli",
+  };
+
+  const hazardLabels: Record<string, string> = {
+    "Impact Hazard": "Impact",
+    "Head Impact": "Head Impact",
+    "Electrical Hazard": "Kelistrikan",
+    "Oil & Slip Hazard": "Oli & Licin",
+    "Roadway Work Zone": "Zona Jalan",
+    "Dust & Debris": "Debu",
+    "UV Exposure": "UV",
+    "Dust & Particulate": "Partikel",
+    "Abrasion Hazard": "Abrasi",
+  };
+
+  const protectionBadges = protectionLevels
+    .map((item) => protectionLabels[item] ?? item)
+    .filter(Boolean)
+    .slice(0, 3);
+
+  const hazardBadges = hazardClasses
+    .map((item) => hazardLabels[item] ?? item)
+    .filter(Boolean)
+    .slice(0, 2);
+
+  const standardHighlights = complianceStandards.slice(0, 2);
+
+  const mediaHints = optimizedMedia
+    .map((variant) => {
+      const format = variant.format?.toUpperCase();
+      if (!format) return null;
+      if (variant.sizeKB) {
+        return `${format} ${variant.sizeKB}KB`;
+      }
+      if (variant.note) {
+        return `${format} • ${variant.note}`;
+      }
+      return format;
+    })
+    .filter(Boolean)
+    .slice(0, 2) as string[];
+
   // Alt text deskriptif untuk gambar produk - Descriptive alt text for product images
   // Menyertakan nama produk, status stok, harga, dan diskon jika ada
   // Includes product name, stock status, price, and discount if available
@@ -49,6 +110,8 @@ export default function ProductCard({
     discount > 0 ? `, diskon ${discount}%` : ''
   }${
     !inStock ? ', stok habis' : ''
+  }${
+    standardHighlights.length ? `, standar ${standardHighlights.join(' & ')}` : ''
   } - Harga ${formatPrice(price)}${
     originalPrice ? ` dari ${formatPrice(originalPrice)}` : ''
   }`;
@@ -152,6 +215,30 @@ export default function ProductCard({
           </h3>
 
           <div className="mt-auto">
+            {(protectionBadges.length > 0 || hazardBadges.length > 0) && (
+              <div className="mb-3 flex flex-wrap gap-2">
+                {protectionBadges.map((label) => (
+                  <Badge key={`${id}-protection-${label}`} variant="outline" className="text-xs font-medium">
+                    {label}
+                  </Badge>
+                ))}
+                {hazardBadges.map((label) => (
+                  <Badge key={`${id}-hazard-${label}`} variant="secondary" className="text-xs font-medium">
+                    {label}
+                  </Badge>
+                ))}
+              </div>
+            )}
+            {standardHighlights.length > 0 && (
+              <p className="mb-3 text-xs text-muted-foreground" aria-label={`Standar utama ${standardHighlights.join(', ')}`}>
+                Standar: <span className="font-medium text-foreground">{standardHighlights.join(" • ")}</span>
+              </p>
+            )}
+            {mediaHints.length > 0 && (
+              <p className="mb-3 text-xs text-muted-foreground" aria-label={`Rekomendasi format gambar ${mediaHints.join(', ')}`}>
+                Format unggulan: {mediaHints.join(" • ")}
+              </p>
+            )}
             <div className="mb-3 flex items-baseline gap-2" aria-label={`Harga: ${formatPrice(price)}`}>
               <span className="text-lg font-bold text-foreground" data-testid="text-product-price">
                 {formatPrice(price)}

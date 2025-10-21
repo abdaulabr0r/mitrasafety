@@ -41,6 +41,13 @@ export async function seedDatabase() {
           { label: "Berat", value: "350 gram" },
           { label: "Sertifikasi", value: "SNI, ISO 9001" }
         ]),
+        protectionLevels: JSON.stringify(["impact:composite-shell", "electrical:class-e"]),
+        complianceStandards: JSON.stringify(["SNI 1811:2007", "ANSI Z89.1 Class E"]),
+        hazardClasses: JSON.stringify(["Head Impact", "Electrical Hazard"]),
+        optimizedMedia: JSON.stringify([
+          { format: "AVIF", sizeKB: 220, note: "Target <250KB untuk hero mobile" },
+          { format: "WebP", sizeKB: 340, note: "Fallback modern untuk desktop" }
+        ]),
       },
       {
         name: "Sarung Tangan Safety Premium Anti-Slip",
@@ -53,6 +60,13 @@ export async function seedDatabase() {
         specifications: JSON.stringify([
           { label: "Material", value: "Kulit Sintetis" },
           { label: "Ukuran", value: "L, XL" }
+        ]),
+        protectionLevels: JSON.stringify(["hand:cut-level-a3", "surface:grip-support"]),
+        complianceStandards: JSON.stringify(["ANSI/ISEA 105 A3"]),
+        hazardClasses: JSON.stringify(["Abrasion Hazard", "Oil & Slip Hazard"]),
+        optimizedMedia: JSON.stringify([
+          { format: "AVIF", sizeKB: 95, note: "Foto katalog mobile" },
+          { format: "WebP", sizeKB: 140, note: "Fallback browser lama" }
         ]),
       },
       {
@@ -68,6 +82,13 @@ export async function seedDatabase() {
           { label: "Material", value: "Polyester" },
           { label: "Warna", value: "Orange, Kuning" }
         ]),
+        protectionLevels: JSON.stringify(["visibility:hi-vis-class2"]),
+        complianceStandards: JSON.stringify(["ISO 20471 Class 2"]),
+        hazardClasses: JSON.stringify(["Low-Light Hazard", "Roadway Work Zone"]),
+        optimizedMedia: JSON.stringify([
+          { format: "AVIF", sizeKB: 80, note: "List produk mobile" },
+          { format: "WebP", sizeKB: 130, note: "Fallback universal" }
+        ]),
       },
       {
         name: "Sepatu Safety Boot Steel Toe Cap",
@@ -80,6 +101,13 @@ export async function seedDatabase() {
         specifications: JSON.stringify([
           { label: "Material", value: "Kulit Asli" },
           { label: "Sol", value: "Anti-slip Rubber" }
+        ]),
+        protectionLevels: JSON.stringify(["impact:steel-toe", "puncture:kevlar-midsole", "surface:slip-resistant"]),
+        complianceStandards: JSON.stringify(["EN ISO 20345 S3", "ASTM F2413 EH"]),
+        hazardClasses: JSON.stringify(["Impact Hazard", "Oil & Slip Hazard", "Electrical Hazard"]),
+        optimizedMedia: JSON.stringify([
+          { format: "AVIF", sizeKB: 260, note: "Foto katalog HD" },
+          { format: "WebP", sizeKB: 310, note: "Fallback untuk Safari" }
         ]),
       },
       {
@@ -96,6 +124,13 @@ export async function seedDatabase() {
           { label: "Lensa", value: "Polycarbonate" },
           { label: "Fitur", value: "Anti-Fog, UV400" }
         ]),
+        protectionLevels: JSON.stringify(["vision:anti-fog", "vision:uv-shield"]),
+        complianceStandards: JSON.stringify(["EN 166:2001" ]),
+        hazardClasses: JSON.stringify(["Dust & Debris", "UV Exposure"]),
+        optimizedMedia: JSON.stringify([
+          { format: "AVIF", sizeKB: 70, note: "Thumbnail produk" },
+          { format: "WebP", sizeKB: 115, note: "Fallback lintas browser" }
+        ]),
       },
       {
         name: "Masker N95 Respirator 3M",
@@ -108,6 +143,13 @@ export async function seedDatabase() {
         specifications: JSON.stringify([
           { label: "Tingkat Filtrasi", value: "95%" },
           { label: "Standar", value: "N95, NIOSH" }
+        ]),
+        protectionLevels: JSON.stringify(["respiratory:n95"]),
+        complianceStandards: JSON.stringify(["NIOSH N95"]),
+        hazardClasses: JSON.stringify(["Dust & Particulate"]),
+        optimizedMedia: JSON.stringify([
+          { format: "AVIF", sizeKB: 40, note: "Katalog mass upload" },
+          { format: "WebP", sizeKB: 65, note: "Fallback minimal" }
         ]),
       }
     ];

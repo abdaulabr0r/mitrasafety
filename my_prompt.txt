@@ -1,0 +1,19 @@
+I am a UI/UX developer. I have an e-commerce website project called "Mitra Safety Indonesia". I want to create the UI/UX (HTML, CSS, JavaScript / Next.js, Tailwind CSS, Framer Motion, Zustand) for this project. The "Mitra Safety Indonesia" project will operate in Indonesia and focus on the Indonesian market. I request your help to produce a UI/UX that:
+
+Uses appropriate color contrast.
+
+Uses semantic HTML & provides alt text: apply correct HTML tags (e.g., <nav>, <button>) and supply meaningful alt text for all images so screen readers can describe them.
+
+Renders and functions correctly in Chrome, Firefox, Safari, and Edge, and works smoothly on iPhone, Android phones, and tablets.
+
+Has a compact and simple page layout.
+
+Produces medium-sized files (HTML, CSS, JavaScript / Next.js, Tailwind CSS, Framer Motion, Zustand) — not too large, not too small.
+
+Is targeted at a beginner–intermediate e-commerce site level (not expert).
+
+Is easy to maintain and debug at a beginner–intermediate level.
+
+Prioritizes web performance (speed).
+
+please use Indonesian terms

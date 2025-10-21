@@ -1,0 +1,83 @@
+1. Penyegaran Merek & Identitas Visual
+Gambar hero yang kontekstual: Tampilkan latar industri Indonesia (lokasi konstruksi di Jakarta, anjungan minyak di Kalimantan, pabrik manufaktur di Surabaya) dengan pekerja yang mengenakan perlengkapan bersertifikat SNI. Ini secara instan membumikan merek dalam realitas lokal.
+
+Aksen palet: Pertahankan warna oranye keselamatan (safety orange), tetapi perkenalkan warna biru dongker (navy) atau arang (charcoal) pekat sebagai warna netral utama (umum dalam pencitraan merek industri Indonesia) dan gunakan warna hijau untuk status “disetujui/bersertifikat SNI”.
+
+Nada tipografi: Padukan Inter/Nunito dengan fon sekunder yang lebih humanis dan ramah Indonesia (misalnya, “Poppins” atau “Jakarta Sans” untuk heading) untuk memperhalus nuansa industrial.
+
+2. Beranda & Pengalaman Landing
+Alur pengguna ganda: Pisahkan hero menjadi dua alur CTA — “Solusi untuk Perusahaan (B2B)” dan “Belanja untuk Tim Anda (B2C)” — yang mengarah ke landing page khusus dengan KPI yang relevan, paket pengadaan, dan bundel produk terkurasi.
+
+Pesan regional: Soroti batas gratis ongkir atau SLA berdasarkan wilayah (“Gratis ongkir Jabodetabek”, “Pengiriman cepat ke kawasan industri Cikarang”).
+
+Kampanye musiman: Siapkan spanduk promo yang selaras dengan puncak ritel khas Indonesia (Ramadhan, 9.9, 10.10, Hari Buruh, tahun ajaran baru K3).
+
+3. Penemuan Produk & Halaman Daftar
+Filter terlokalisasi: Tambahkan chip (label) untuk standar SNI/ISO, kelas bahaya, dan vertikal industri (pertambangan, konstruksi, migas).
+
+Lencana sertifikasi cepat: Bedakan secara visual produk yang memiliki kepatuhan SNI, ANSI, ASTM, atau BPJS Ketenagakerjaan.
+
+Tampilan perbandingan: Izinkan perbandingan spesifikasi berdampingan untuk tim pengadaan yang memutuskan di antara SKU serupa.
+
+4. Halaman Detail Produk
+Penanda regulasi: Bagian khusus yang merangkum sertifikasi SNI, metode pengujian, dan peraturan keselamatan Indonesia terkait (referensi Permenaker, Kemenakertrans).
+
+Daftar periksa penggunaan: Daftar periksa visual atau infografis yang mencakup “Kapan alat ini wajib dipakai” dan “Cara perawatan sesuai SOP K3 Indonesia”.
+
+Aset yang dapat diunduh: Sediakan lembar spesifikasi PDF dalam Bahasa Indonesia, dokumen SDS (Lembar Data Keselamatan), dan surat kepatuhan pemerintah yang sering dibutuhkan oleh perusahaan besar.
+
+Cerita pelanggan: Sertakan studi kasus yang menampilkan merek lokal (“Dipakai oleh proyek MRT Jakarta”, “Dipercaya Pertamina”).
+
+5. Checkout & Pembayaran (Web + Seluler)
+Format alamat: Gunakan dropdown bertingkat (Provinsi → Kabupaten/Kota → Kecamatan → Kelurahan) dengan pelengkapan otomatis (autocomplete), plus pengambilan kode pos opsional.
+
+Opsi pembayaran: Integrasikan transfer VA (Mandiri, BCA, BNI, BRI), QRIS, dan dompet digital (GoPay, OVO, DANA, ShopeePay). Tawarkan termin pembayaran 30/60 hari untuk B2B dengan persetujuan bersyarat.
+
+Jembatan WhatsApp: Tambahkan opsi “Konfirmasi via WhatsApp” untuk tindak lanjut pesanan, karena pembeli Indonesia sering menginginkan validasi cepat dari manusia.
+
+6. Pengalaman Aplikasi Seluler (iOS/Android)
+Tata letak navigasi bawah: Beranda, Katalog, Pindai (QR/barcode untuk pemesanan ulang cepat), Keranjang, Akun. Pastikan ikon berukuran besar dan diberi label dalam Bahasa Indonesia.
+
+Widget pemesanan ulang cepat: Sediakan kartu untuk “Pesanan terakhir”, “Produk favorit tim”, dan “Pembelian berkala” di beranda.
+
+Modul Offline-first (utamakan luring): Simpan (cache) katalog produk dan izinkan draf permintaan (barang) saat luring—penting untuk supervisor pengadaan di lokasi di daerah terpencil.
+
+Pesan push: Notifikasi push yang disesuaikan dalam Bahasa Indonesia untuk peringatan stok ulang (restock), sertifikasi keselamatan yang akan kedaluwarsa, atau pengingat pelatihan keselamatan yang akan datang.
+
+7. Peningkatan Pengadaan B2B
+Tender & pemesanan massal: Aktifkan permintaan penawaran harga (quote) dengan unggahan CSV, jumlah pesanan minimum, dan alur multi-persetujuan yang sesuai dengan langkah-langkah pengadaan B2B khas Indonesia.
+
+Dasbor kepatuhan K3: Visualisasikan pemenuhan APD (Alat Pelindung Diri) per departemen vs. kepatuhan Permenaker No. 8/2010, termasuk jadwal pelatihan dan kedaluwarsa sertifikasi.
+
+Visibilitas kontrak: Sediakan halaman bagi admin perusahaan untuk melacak harga kontrak, komitmen SLA, dan saluran kontak dukungan.
+
+8. Kepercayaan, Kepatuhan & Keamanan (Siap UU PDP)
+Privasi & kepatuhan PDP: Masukkan toggle (tombol) persetujuan untuk penggunaan data, tautkan ke kebijakan privasi Bahasa Indonesia yang merujuk UU No. 27/2022 (Perlindungan Data Pribadi), dan perjelas praktik retensi data.
+
+Disclaimer keamanan: Tampilkan lencana keamanan (ISO 27001 jika berlaku) dan sertakan pernyataan tentang secure socket layers (SSL), pemantauan penipuan (fraud), dan residensi data jika di-hosting di pusat data Indonesia.
+
+Jejak audit: Untuk B2B, tampilkan log audit untuk setiap tindakan pengadaan (siapa yang menyetujui, kapan, dari perangkat apa).
+
+9. Dukungan Pelanggan & Lapisan Layanan
+Dukungan Omnichannel: Titik masuk WA, telepon, dan email yang jelas dengan jam layanan dalam WIB. Tawarkan penjadwalan panggilan balik (callback) untuk prospek pengadaan.
+
+Basis pengetahuan: Bangun modul FAQ (Tanya Jawab) yang mencakup peraturan K3, video perawatan produk dalam Bahasa Indonesia, dan materi pelatihan yang dapat diunduh.
+
+SLA Layanan: Publikasikan janji waktu respons dan pengiriman yang disegmentasi berdasarkan wilayah.
+
+10. Keterlibatan Berkelanjutan & Lokalisasi
+Nada bahasa lokal: Gunakan campuran Bahasa Indonesia formal dan kasual (percakapan). Contoh microcopy: “Butuh bantuan memilih APD? Tim kami siap membantu via WhatsApp.”
+
+Komunitas & CSR: Tampilkan inisiatif CSR Indonesia, program pelatihan keselamatan, dan kemitraan dengan Kementerian Ketenagakerjaan atau BPJS Ketenagakerjaan.
+
+Acara & webinar: Promosikan webinar tentang “Update K3 2025” atau “Implementasi APD di lingkungan kerja Indonesia” dan izinkan pendaftaran melalui platform.
+
+11. Sentuhan Visual & Interaksi
+Pita "Terverifikasi SNI": Pita animasi yang muncul pada produk bersertifikat saat masuk ke area pandang (viewport).
+
+Lembar filter interaktif: Di seluler, gunakan bottom sheets (lembar bawah) dengan tombol “Terapkan Filter” yang sticky (menempel) dalam Bahasa Indonesia.
+
+Skeleton states: Sesuaikan pemuat kerangka (skeleton loader) dengan gradien halus dan sapaan bahasa Indonesia (misalnya, “Sebentar ya, lagi memuat...”).
+
+Animasi mikro: Gerakan halus saat menambahkan ke keranjang (“Barang masuk ke Keranjang!” dengan konfeti menggunakan copy bahasa Indonesia).
+

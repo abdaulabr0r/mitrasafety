@@ -41,6 +41,10 @@ export const products = sqliteTable("products", {
   inStock: integer("in_stock", { mode: "boolean" }).notNull().default(true),
   badge: text("badge"),
   specifications: text("specifications"), // JSON string for SQLite
+  protectionLevels: text("protection_levels"), // JSON string for SQLite
+  complianceStandards: text("compliance_standards"), // JSON string for SQLite
+  hazardClasses: text("hazard_classes"), // JSON string for SQLite
+  optimizedMedia: text("optimized_media"), // JSON string for SQLite
 });
 
 export const insertProductSchema = createInsertSchema(products).omit({

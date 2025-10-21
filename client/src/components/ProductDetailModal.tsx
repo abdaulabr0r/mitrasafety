@@ -25,6 +25,10 @@ interface ProductDetailModalProps {
     badge?: string;
     inStock: boolean;
     specifications?: { label: string; value: string }[];
+    protectionLevels?: string[];
+    complianceStandards?: string[];
+    hazardClasses?: string[];
+    optimizedMedia?: { format: string; sizeKB?: number; note?: string; url?: string }[];
   } | null;
   onAddToCart?: (productId: string, quantity: number) => void;
 }
@@ -41,6 +45,24 @@ export default function ProductDetailModal({
   if (!product) return null;
   
   const images = product.images || [product.imageUrl];
+  const protectionLevels = product.protectionLevels ?? [];
+  const complianceStandards = product.complianceStandards ?? [];
+  const hazardClasses = product.hazardClasses ?? [];
+  const optimizedMedia = product.optimizedMedia ?? [];
+
+  const protectionLabels: Record<string, string> = {
+    "impact:steel-toe": "Steel Toe",
+    "impact:composite-shell": "Cangkang Komposit",
+    "puncture:kevlar-midsole": "Midsole Kevlar",
+    "electrical:class-e": "Helm Class E",
+    "electrical:eh": "EH Rated",
+    "visibility:hi-vis-class2": "Hi-Vis Class 2",
+    "surface:slip-resistant": "Sol Anti-Slip",
+    "vision:anti-fog": "Anti-Fog Lens",
+    "respiratory:n95": "Respirator N95",
+    "hand:cut-level-a3": "Cut Level A3",
+    "surface:grip-support": "Grip Anti-Oli",
+  };
 
   // Alt text deskriptif untuk gambar produk detail - Descriptive alt text for product detail images
   // Menyertakan nama produk, kategori, status stok, dan informasi tambahan
@@ -200,6 +222,58 @@ export default function ProductDetailModal({
               </Badge>
             ) : (
               <Badge variant="destructive">Stok Habis</Badge>
+            )}
+
+            {(protectionLevels.length > 0 || complianceStandards.length > 0 || hazardClasses.length > 0) && (
+              <div className="space-y-3 rounded-md border bg-card/60 p-4 text-sm">
+                {protectionLevels.length > 0 && (
+                  <div>
+                    <p className="mb-2 font-semibold text-foreground">Perlindungan Utama</p>
+                    <div className="flex flex-wrap gap-2">
+                      {protectionLevels.map((item) => (
+                        <Badge key={`protection-${item}`} variant="outline" className="text-xs font-medium">
+                          {protectionLabels[item] ?? item}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {complianceStandards.length > 0 && (
+                  <div>
+                    <p className="mb-1 font-semibold text-foreground">Standar Sertifikasi</p>
+                    <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
+                      {complianceStandards.map((standard) => (
+                        <li key={`standard-${standard}`}>{standard}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {hazardClasses.length > 0 && (
+                  <div>
+                    <p className="mb-1 font-semibold text-foreground">Risiko yang Ditangani</p>
+                    <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
+                      {hazardClasses.map((hazard) => (
+                        <li key={`hazard-${hazard}`}>{hazard}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {optimizedMedia.length > 0 && (
+              <div className="rounded-md border bg-card/60 p-4 text-sm text-muted-foreground">
+                <p className="mb-2 font-semibold text-foreground">Panduan Optimasi Gambar</p>
+                <ul className="space-y-1">
+                  {optimizedMedia.map((variant, index) => (
+                    <li key={`media-${variant.format}-${index}`}>
+                      <span className="font-medium text-foreground">{variant.format?.toUpperCase()}</span>
+                      {variant.sizeKB ? ` • ${variant.sizeKB}KB` : null}
+                      {variant.note ? ` • ${variant.note}` : null}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
 
             <div className="space-y-4 border-y py-4">
